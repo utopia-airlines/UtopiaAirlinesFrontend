@@ -17,8 +17,7 @@ var config = {
         js: './src/**/*.js',
         images: './src/images/*',
         css: [
-            'node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
+            'node_modules/bootstrap/dist/css/bootstrap.min.css'
         ],
         dist: './dist',
         mainJs: './src/main.js'
@@ -27,7 +26,7 @@ var config = {
 
 //Start a local development server
 gulp.task('connect', function() {
-    connect.server({
+    return connect.server({
         root: ['dist'],
         port: config.port,
         base: config.devBaseUrl,
@@ -35,20 +34,20 @@ gulp.task('connect', function() {
     });
 });
 
-gulp.task('open', ['connect'], function() {
-    gulp.src('dist/index.html')
+gulp.task('open', gulp.series('connect', function() {
+    return gulp.src('dist/index.html')
         .pipe(open({ uri: config.devBaseUrl + ':' + config.port + '/'}));
-});
+}));
 
 gulp.task('html', function() {
-    gulp.src(config.paths.html)
+    return gulp.src(config.paths.html)
         .pipe(gulp.dest(config.paths.dist))
         .pipe(connect.reload());
 });
 
 gulp.task('js', function() {
-    browserify(config.paths.mainJs)
-        .transform(babelify, {presets: ["es2015", "react"]})
+    return browserify(config.paths.mainJs)
+        .transform(babelify, {presets: ["@babel/preset-env", "@babel/preset-react"]})
         .bundle()
         .on('error', console.error.bind(console)) // eslint-disable-line no-console
         .pipe(source('bundle.js'))
@@ -57,13 +56,13 @@ gulp.task('js', function() {
 });
 
 gulp.task('css', function() {
-    gulp.src(config.paths.css)
+    return gulp.src(config.paths.css)
         .pipe(concat('bundle.css'))
         .pipe(gulp.dest(config.paths.dist + '/css'));
 });
 
 gulp.task('images', function() {
-    gulp.src(config.paths.images)
+    return gulp.src(config.paths.images)
         .pipe(gulp.dest(config.paths.dist + "/images"))
         .pipe(connect.reload());
 });
@@ -79,4 +78,4 @@ gulp.task('watch', function() {
     gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'watch']);
+gulp.task('default', gulp.series('html', 'js', 'css', 'images', 'lint', 'open', 'watch'));
