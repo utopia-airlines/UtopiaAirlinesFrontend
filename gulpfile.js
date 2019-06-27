@@ -50,7 +50,7 @@ gulp.task('js', function() {
     browserify(config.paths.mainJs)
         .transform(babelify, {presets: ["es2015", "react"]})
         .bundle()
-        .on('error', console.error.bind(console))
+        .on('error', console.error.bind(console)) // eslint-disable-line no-console
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(config.paths.dist + '/scripts'))
         .pipe(connect.reload());
