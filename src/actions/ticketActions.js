@@ -42,17 +42,20 @@ export const TicketActions = {
         } else {
             booking = TicketApi.getBookingDetailsBySeat(ticket.flight, ticket.row, ticket.seat);
         }
-        Dispatcher.dispatch({
-            type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
-            value: booking
+        booking.done((val) => {
+            Dispatcher.dispatch({
+                type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
+                value: val
+            });
         });
     },
 
     payForTicket: function(ticket, price) {
-        const result = TicketApi.payForTicket(ticket, price);
-        Dispatcher.dispatch({
-            type: TICKET_ACTIONS.PAY_FOR_TICKET,
-            value: result
+        TicketApi.payForTicket(ticket, price).done((result) => {
+            Dispatcher.dispatch({
+                type: TICKET_ACTIONS.PAY_FOR_TICKET,
+                value: result
+            });
         });
     },
 
@@ -63,10 +66,10 @@ export const TicketActions = {
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val
             });
-        }, (err) => {
+        }, () => {
             Dispatcher.dispatch({
-                type: TICKET_ACTIONS.BOOKING_FAILURE,
-                value: err
+                type: TICKET_ACTIONS.TIME_OUT,
+                value: ticket
             });
         });
     },
@@ -79,10 +82,11 @@ export const TicketActions = {
     },
 
     cancelTicket: function(ticket) {
-        TicketApi.cancelTicket(ticket);
-        Dispatcher.dispatch({
-            type: TICKET_ACTIONS.CANCEL,
-            value: ticket
+        TicketApi.cancelTicket(ticket).done(() => {
+            Dispatcher.dispatch({
+                type: TICKET_ACTIONS.CANCEL,
+                value: ticket
+            });
         });
     }
 }

@@ -9,10 +9,11 @@ export const FLIGHT_ACTIONS = {
 
 export const FlightActions = {
     filterSearch: function(filter) {
-        const flights = FlightApi.getFlights(filter);
-        Dispatcher.dispatch({
-            type: FLIGHT_ACTIONS.FILTER_SEARCH,
-            value: flights
+        FlightApi.getFlights(filter, (data) => {
+            Dispatcher.dispatch({
+                type: FLIGHT_ACTIONS.FILTER_SEARCH,
+                value: data
+            });
         });
     },
     selectFlight: function(flight) {
