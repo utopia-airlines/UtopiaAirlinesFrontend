@@ -1,3 +1,5 @@
+"use strict";
+
 import Dispatcher from '../dispatcher/appDispatcher';
 import FlightApi from '../api/flightApi';
 

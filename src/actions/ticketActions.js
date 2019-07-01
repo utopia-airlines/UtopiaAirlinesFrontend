@@ -1,3 +1,5 @@
+"use strict";
+
 import Dispatcher from '../dispatcher/appDispatcher';
 import TicketApi from '../api/ticketApi';
 

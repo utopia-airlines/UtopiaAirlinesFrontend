@@ -1,3 +1,5 @@
+"use strict";
+
 import Dispatcher from '../dispatcher/appDispatcher';
 import {TICKET_ACTIONS} from '../actions/ticketActions';
 import {EventEmitter} from 'events';

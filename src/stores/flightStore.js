@@ -1,3 +1,5 @@
+"use strict";
+
 import Dispatcher from '../dispatcher/appDispatcher';
 import {FLIGHT_ACTIONS} from '../actions/flightActions';
 import {EventEmitter} from 'events';

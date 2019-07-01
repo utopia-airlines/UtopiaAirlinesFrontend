@@ -1,3 +1,5 @@
+"use strict";
+
 import jquery from 'jquery';
 import Config from '../config';
 

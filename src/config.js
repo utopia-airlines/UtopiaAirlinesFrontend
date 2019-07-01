@@ -1,3 +1,5 @@
+"use strict";
+
 const Config = {
     api: 'http://localhost:8080'
 };
