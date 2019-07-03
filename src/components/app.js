@@ -8,7 +8,7 @@ import {Books} from './books';
 import FlightStore from '../stores/flightStore';
 import {FlightList} from './FlightList';
 
-export class App extends React.Component{
+export class App extends React.Component {
 
     constructor(props) {
         super(props);
@@ -29,15 +29,15 @@ export class App extends React.Component{
         );
     }
 
-    componentWillMount(){
+    componentWillMount() {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     }
 
-    _onFlightChange(){
+    _onFlightChange() {
         this.setState({flightList: FlightStore.getAllFlights()});
     }
 }

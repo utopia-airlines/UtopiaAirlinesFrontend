@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {FlightActions} from '../actions/flightActions';
 
 
-export class FlightList extends React.Component{
+export class FlightList extends React.Component {
 
     createFlightRow(flight) {
         return (
