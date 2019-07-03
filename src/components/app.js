@@ -3,11 +3,10 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
-import {Header} from './header.js';
-import {Home} from './home.js';
-import {Books} from './books.js';
-import BookStore from '../stores/bookStore';
-
+import Header from './header';
+import {Books} from './books';
+import FlightStore from '../stores/flightStore';
+import {FlightList} from './FlightList';
 
 export class App extends React.Component{
 
@@ -23,7 +22,7 @@ export class App extends React.Component{
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path='/' component={Home}/>
+                    <Route exact path='/' component={FlightList}/>
                     <Route path='/books' render={(props) => (<Books {...props} bookList={this.state.bookList} />)}/>
                 </Switch>
             </div>
@@ -31,14 +30,14 @@ export class App extends React.Component{
     }
 
     componentWillMount(){
-        BookStore.addChangeListener(this._onBookChange.bind(this));
+        FlightStore.addChangeListener(this._onFlightChange.bind(this));
     }
 
     componentWillUnmount(){
-        BookStore.removeChangeListener(this._onBookChange.bind(this));
+        FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     }
 
-    _onBookChange(){
-        this.setState({bookList: BookStore.getAllBooks()});
+    _onFlightChange(){
+        this.setState({flightList: FlightStore.getAllFlights()});
     }
 }
