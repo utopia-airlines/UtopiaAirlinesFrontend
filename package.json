@@ -5,7 +5,9 @@
   "repository": "https://github.com/utopia-airlines/UtopiaAirlinesFrontend",
   "main": "main.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "",
   "license": "",
@@ -25,7 +27,8 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "toastr": "^2.1.4",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -35,5 +38,6 @@
     "@babel/preset-react": "^7.0.0",
     "babelify": "^10.0.0",
     "eslint-plugin-react": "^7.14.2"
-  }
+  },
+  "snyk": true
 }
