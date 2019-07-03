@@ -18,7 +18,7 @@ export class App extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <Header />
                 <Switch>

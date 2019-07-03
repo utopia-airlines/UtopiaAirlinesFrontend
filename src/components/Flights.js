@@ -7,7 +7,7 @@ import {FlightList} from '../components/FlightList';
 export class Flights extends React.Component {
 
     render() {
-        return(
+        return (
             <div>
                 <FlightList flightList = {this.props.flightList} />
             </div>

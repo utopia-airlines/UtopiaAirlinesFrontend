@@ -24,7 +24,7 @@ export class FlightList extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <div>
                 <h1>Available Flights</h1>
                 <table className="table">
