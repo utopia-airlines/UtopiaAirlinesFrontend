@@ -23,7 +23,7 @@ export class App extends React.Component {
                 <Header />
                 <Switch>
                     <Route exact path='/' component={FlightList}/>
-                    <Route path='/books' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
+                    <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                 </Switch>
             </div>
         );
