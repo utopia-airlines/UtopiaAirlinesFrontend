@@ -19,7 +19,7 @@ export class FlightList extends React.Component {
         );
     }
 
-    componentWillMount() {
+    componentDidMount() {
         FlightActions.filterSearch();
     }
 

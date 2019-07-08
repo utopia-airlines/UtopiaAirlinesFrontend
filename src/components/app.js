@@ -29,7 +29,7 @@ export class App extends React.Component {
         );
     }
 
-    componentWillMount() {
+    componentDidMount() {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
     }
 
