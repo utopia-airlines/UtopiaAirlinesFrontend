@@ -49,29 +49,25 @@ Dispatcher.register((action) => {
 	switch (action.actionType) {
         case TICKET_ACTIONS.SELECT_SEAT:
             _ticketStore.selectedSeat = action.data;
-            TicketStore.emitChange();
             break;
         case TICKET_ACTIONS.BOOK_TICKET:
         case TICKET_ACTIONS.SHOW_BOOKING_DETAILS:
             _ticketStore.bookedTicket = action.data;
-            TicketStore.emitChange();
             break;
         case TICKET_ACTIONS.BOOKING_FAILURE:
             _ticketStore.bookingFailureReason = action.data;
-            TicketStore.emitChange();
             break;
         case TICKET_ACTIONS.PAY_FOR_TICKET:
             _ticketStore.paymentResult = action.data;
-            TicketStore.emitChange();
             break;
         case TICKET_ACTIONS.TIME_OUT:
         case TICKET_ACTIONS.CANCEL:
             _ticketStore.bookedTicket = null;
-            TicketStore.emitChange();
             break;
         default:
             return;
     }
+    TicketStore.emitChange();
 });
 
 export default TicketStore;
