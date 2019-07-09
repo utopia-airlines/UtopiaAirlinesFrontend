@@ -22,7 +22,7 @@ export class App extends React.Component {
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path='/' component={FlightList}/>
+                    <Route exact path='/' component={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
                     <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                 </Switch>
             </div>
