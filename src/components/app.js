@@ -8,6 +8,7 @@ import {Flights} from './Flights';
 import FlightStore from '../stores/flightStore';
 import {FlightList} from './FlightList';
 import {FlightActions} from '../actions/flightActions';
+import {FlightDetails} from './FlightDetails';
 
 export class App extends React.Component {
 
@@ -25,6 +26,7 @@ export class App extends React.Component {
                 <Switch>
                     <Route exact path='/' component={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
                     <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
+                    <Route path='/flight' component={(props) => (<FlightDetails {...props} />)}/>
                 </Switch>
             </div>
         );
