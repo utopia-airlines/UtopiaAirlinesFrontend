@@ -4,41 +4,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 
-export class FlightList extends React.Component {
+function createFlightRow(flight) {
+    return (
+        <tr key={flight.id}>
+            <td> {flight.id} </td>
+            <td> {flight.departure} </td>
+            <td> {flight.departure_date} </td>
+            <td> {flight.destination} </td>
+            <td> {flight.arrival_date} </td>
+        </tr>
+    );
+}
 
-    createFlightRow(flight) {
-        return (
-            <tr key={flight.id}>
-                <td> {flight.id} </td>
-                <td> {flight.departure} </td>
-                <td> {flight.departure_date} </td>
-                <td> {flight.destination} </td>
-                <td> {flight.arrival_date} </td>
-            </tr>
-        );
-    }
-
-    render() {
-        return (
-            <div>
-                <h1>Available Flights</h1>
-                <Table className="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Departure</th>
-                            <th>Departure Date/Time</th>
-                            <th>Destination</th>
-                            <th>Arrival Date/Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.flightList.map(this.createFlightRow, this)}
-                    </tbody>
-                </Table>
-            </div>
-        );
-    }
+export function FlightList(props) {
+    return (
+        <div>
+            <h1>Available Flights</h1>
+            <Table className="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Departure</th>
+                        <th>Departure Date/Time</th>
+                        <th>Destination</th>
+                        <th>Arrival Date/Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.flightList.map(createFlightRow)}
+                </tbody>
+            </Table>
+        </div>
+    );
 }
 
 FlightList.propTypes = {
