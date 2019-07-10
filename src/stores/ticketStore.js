@@ -46,19 +46,19 @@ class TicketStoreClass extends EventEmitter {
 const TicketStore = new TicketStoreClass();
 
 Dispatcher.register((action) => {
-	switch (action.actionType) {
+	switch (action.type) {
         case TICKET_ACTIONS.SELECT_SEAT:
-            _ticketStore.selectedSeat = action.data;
+            _ticketStore.selectedSeat = action.value;
             break;
         case TICKET_ACTIONS.BOOK_TICKET:
         case TICKET_ACTIONS.SHOW_BOOKING_DETAILS:
-            _ticketStore.bookedTicket = action.data;
+            _ticketStore.bookedTicket = action.value;
             break;
         case TICKET_ACTIONS.BOOKING_FAILURE:
-            _ticketStore.bookingFailureReason = action.data;
+            _ticketStore.bookingFailureReason = action.value;
             break;
         case TICKET_ACTIONS.PAY_FOR_TICKET:
-            _ticketStore.paymentResult = action.data;
+            _ticketStore.paymentResult = action.value;
             break;
         case TICKET_ACTIONS.TIME_OUT:
         case TICKET_ACTIONS.CANCEL:

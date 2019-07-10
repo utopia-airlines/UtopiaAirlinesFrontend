@@ -41,13 +41,13 @@ class FlightStoreClass extends EventEmitter {
 const FlightStore = new FlightStoreClass();
 
 Dispatcher.register((action) => {
-    switch (action.actionType) {
+    switch (action.type) {
         case FLIGHT_ACTIONS.FILTER_SEARCH:
-            _flightStore.filteredFlights = action.data;
+            _flightStore.filteredFlights = action.value;
             FlightStore.emitChange();
             break;
         case FLIGHT_ACTIONS.SELECT_FLIGHT:
-            _flightStore.selected = action.data;
+            _flightStore.selected = action.value;
             FlightStore.emitChange();
             break;
         case FLIGHT_ACTIONS.RETURN_TO_HOMEPAGE:
