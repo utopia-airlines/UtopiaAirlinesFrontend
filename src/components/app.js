@@ -40,6 +40,6 @@ export class App extends React.Component {
     }
 
     _onFlightChange() {
-        this.setState({flightList: FlightStore.getAllFlights()});
+        this.setState({flightList: FlightStore.getFilteredFlights()});
     }
 }
