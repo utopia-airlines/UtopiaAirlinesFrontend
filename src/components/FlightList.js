@@ -20,7 +20,7 @@ export class FlightList extends React.Component {
     }
 
     componentDidMount() {
-        FlightActions.filterSearch();
+        FlightActions.filterSearch((arg) => arg);
     }
 
     render() {
