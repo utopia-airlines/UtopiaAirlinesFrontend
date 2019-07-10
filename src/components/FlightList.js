@@ -31,8 +31,10 @@ export class FlightList extends React.Component {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
-                            <th>Author</th>
+                            <th>Departure</th>
+                            <th>Departure Date/Time</th>
+                            <th>Destination</th>
+                            <th>Arrival Date/Time</th>
                         </tr>
                     </thead>
                     <tbody>
