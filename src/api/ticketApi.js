@@ -1,30 +1,27 @@
 "use strict";
 
-import jquery from 'jquery';
+import axios from 'axios';
 import Config from '../config';
 
 const TicketApi = {
     bookTicket: (ticket) => {
-        return jquery.post(Config.api + '/flight/' + ticket.flight + '/seat/' +
-            ticket.row + '/' + ticket.seat + '/ticket', null, null, "json");
+        return axios.post(Config.api + '/flight/' + ticket.flight + '/seat/' +
+            ticket.row + '/' + ticket.seat + '/ticket', {});
     },
     getBookingDetailsById: (bookingId) => {
-        return jquery.get(Config.api + '/booking/' + bookingId, null, null, "json");
+        return axios.get(Config.api + '/booking/' + bookingId);
     },
     getBookingDetailsBySeat: (flight, row, seat) => {
-        return jquery.get(Config.api + '/flight/' + flight + '/seat/' + row + '/' + seat,
-            null, null, "json");
+        return axios.get(Config.api + '/flight/' + flight + '/seat/' + row + '/' + seat);
     },
     payForTicket: (ticket, price) => {
-        return jquery.ajax(Config.api + '/booking/' + ticket.bookingId, {
-            method: 'PUT', data: { price }, dataType: 'json'});
+        return axios.put(Config.api + '/booking/' + ticket.bookingId, price);
     },
     extendTimeout: (ticket) => {
-        return jquery.ajax(Config.api + '/booking/' + ticket.bookingId,
-            {method: 'PUT', dataType: 'json'});
+        return axios.put(Config.api + '/booking/' + ticket.bookingId);
     },
     cancelTicket: (ticket) => {
-        return jquery.ajax(Config.api + '/booking/' + ticket.bookingId, {method: 'DELETE'});
+        return axios.delete(Config.api + '/booking/' + ticket.bookingId);
     }
 }
 
