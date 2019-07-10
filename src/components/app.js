@@ -7,6 +7,7 @@ import Header from './header';
 import {Flights} from './Flights';
 import FlightStore from '../stores/flightStore';
 import {FlightList} from './FlightList';
+import {FlightActions} from '../actions/flightActions';
 
 export class App extends React.Component {
 
@@ -31,6 +32,7 @@ export class App extends React.Component {
 
     componentDidMount() {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
+        FlightActions.filterSearch((arg) => arg);
     }
 
     componentWillUnmount() {

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FlightActions} from '../actions/flightActions';
 
 
 export class FlightList extends React.Component {
@@ -17,10 +16,6 @@ export class FlightList extends React.Component {
                 <td> {flight.arrivalDate} </td>
             </tr>
         );
-    }
-
-    componentDidMount() {
-        FlightActions.filterSearch((arg) => arg);
     }
 
     render() {
