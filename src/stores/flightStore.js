@@ -30,7 +30,7 @@ class FlightStoreClass extends EventEmitter {
     }
 
     getFilteredFlights() {
-        return _flightStore.filteredFlighs;
+        return _flightStore.filteredFlights;
     }
 
     getSelectedFlight() {
