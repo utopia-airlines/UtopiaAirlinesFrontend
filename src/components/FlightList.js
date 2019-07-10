@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Table from 'react-bootstrap/Table';
 
 export class FlightList extends React.Component {
 
@@ -22,7 +22,7 @@ export class FlightList extends React.Component {
         return (
             <div>
                 <h1>Available Flights</h1>
-                <table className="table">
+                <Table className="table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -35,7 +35,7 @@ export class FlightList extends React.Component {
                     <tbody>
                         {this.props.flightList.map(this.createFlightRow, this)}
                     </tbody>
-                </table>
+                </Table>
             </div>
         );
     }
