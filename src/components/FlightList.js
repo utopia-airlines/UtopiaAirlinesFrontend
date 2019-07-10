@@ -11,9 +11,9 @@ export class FlightList extends React.Component {
             <tr key={flight.id}>
                 <td> {flight.id} </td>
                 <td> {flight.departure} </td>
-                <td> {flight.departureDate} </td>
+                <td> {flight.departure_date} </td>
                 <td> {flight.destination} </td>
-                <td> {flight.arrivalDate} </td>
+                <td> {flight.arrival_date} </td>
             </tr>
         );
     }
