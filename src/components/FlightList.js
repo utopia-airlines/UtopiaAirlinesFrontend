@@ -6,8 +6,8 @@ import Table from 'react-bootstrap/Table';
 
 function createFlightRow(flight) {
     return (
-        <tr key={flight.id}>
-            <td> {flight.id} </td>
+        <tr key={flight.flight_number}>
+            <td> {flight.flight_number} </td>
             <td> {flight.departure} </td>
             <td> {flight.departure_date} </td>
             <td> {flight.destination} </td>
