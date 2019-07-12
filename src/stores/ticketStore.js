@@ -10,7 +10,8 @@ let _ticketStore = {
     selectedSeat: null,
     bookedTicket: null,
     bookingFailureReason: null,
-    paymentResult: null
+    paymentResult: null,
+    globalError: null
 }
 
 class TicketStoreClass extends EventEmitter {
@@ -41,6 +42,10 @@ class TicketStoreClass extends EventEmitter {
     getPaymentResult() {
         return _ticketStore.paymentResult;
     }
+
+    getGlobalError() {
+        return _ticketStore.globalError;
+    }
 }
 
 const TicketStore = new TicketStoreClass();
@@ -49,10 +54,12 @@ Dispatcher.register((action) => {
 	switch (action.type) {
         case TICKET_ACTIONS.SELECT_SEAT:
             _ticketStore.selectedSeat = action.value;
+            _ticketStore.globalError = null;
             break;
         case TICKET_ACTIONS.BOOK_TICKET:
         case TICKET_ACTIONS.SHOW_BOOKING_DETAILS:
             _ticketStore.bookedTicket = action.value;
+            _ticketStore.globalError = null;
             break;
         case TICKET_ACTIONS.BOOKING_FAILURE:
             _ticketStore.bookingFailureReason = action.value;
@@ -63,6 +70,12 @@ Dispatcher.register((action) => {
         case TICKET_ACTIONS.TIME_OUT:
         case TICKET_ACTIONS.CANCEL:
             _ticketStore.bookedTicket = null;
+            break;
+        case TICKET_ACTIONS.INVALID_BOOKING_ID:
+            _ticketStore.globalError = 'No such booking';
+            break;
+        case TICKET_ACTIONS.CLEAR_ERROR:
+            _ticketStore.globalError = null;
             break;
         default:
             return;

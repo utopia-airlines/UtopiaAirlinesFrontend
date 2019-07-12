@@ -11,7 +11,9 @@ export const TICKET_ACTIONS = {
     PAY_FOR_TICKET: 'ticketActions.PayForTicket',
     EXTEND_TIMEOUT: 'ticketActions.ExtendTimeout',
     TIME_OUT: 'ticketActions.BookingTimedOut',
-    CANCEL: 'ticketActions.CancelTicket'
+    CANCEL: 'ticketActions.CancelTicket',
+    INVALID_BOOKING_ID: 'ticketActions.InvalidBookingId',
+    CLEAR_ERROR: 'ticketActions.clearError'
 }
 
 export const TicketActions = {
@@ -44,11 +46,14 @@ export const TicketActions = {
         } else {
             booking = TicketApi.getBookingDetailsBySeat(ticket.flight, ticket.row, ticket.seat);
         }
-        booking.then((val) => {
+        booking.then((val) => { // TODO: what if booking invalid (error returned)?
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val
             });
+        }, (err) => {
+            console.log(err);
+            this.invalidBookingId();
         });
     },
 
@@ -89,6 +94,20 @@ export const TicketActions = {
                 type: TICKET_ACTIONS.CANCEL,
                 value: ticket
             });
+        });
+    },
+
+    invalidBookingId: function() {
+        Dispatcher.dispatch({
+            type: TICKET_ACTIONS.INVALID_BOOKING_ID,
+            value: true
+        });
+    },
+
+    clearError: function() {
+        Dispatcher.dispatch({
+            type: TICKET_ACTIONS.CLEAR_ERROR,
+            value: true
         });
     }
 }
