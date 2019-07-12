@@ -44,7 +44,7 @@ export const TicketActions = {
         } else {
             booking = TicketApi.getBookingDetailsBySeat(ticket.flight, ticket.row, ticket.seat);
         }
-        booking.done((val) => {
+        booking.then((val) => {
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val
@@ -53,7 +53,7 @@ export const TicketActions = {
     },
 
     payForTicket: function(ticket, price) {
-        TicketApi.payForTicket(ticket, price).done((result) => {
+        TicketApi.payForTicket(ticket, price).then((result) => { // TODO: error handling
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.PAY_FOR_TICKET,
                 value: result
@@ -84,7 +84,7 @@ export const TicketActions = {
     },
 
     cancelTicket: function(ticket) {
-        TicketApi.cancelTicket(ticket).done(() => {
+        TicketApi.cancelTicket(ticket).then(() => { // TODO: error handling
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.CANCEL,
                 value: ticket
