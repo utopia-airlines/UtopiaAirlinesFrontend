@@ -17,6 +17,7 @@ export class App extends React.Component {
         super(props);
         this.state = {
             flightList:[],
+            selectedFlight: null,
             selectedSeat: null,
             bookedTicket: null,
             bookingFailureReason: null,
@@ -49,7 +50,15 @@ export class App extends React.Component {
     }
 
     _onFlightChange() {
-        this.setState({flightList: FlightStore.getFilteredFlights()});
+        const oldSelectedFlight = this.state.selectedFlight;
+        const newSelectedFlight = FlightStore.getSelectedFlight();
+        this.setState({
+            flightList: FlightStore.getFilteredFlights(),
+            selectedFlight: newSelectedFlight
+        });
+        if (oldSelectedFlight !== newSelectedFlight && newSelectedFlight) {
+            history.pushState(null, 'Flight Details', '/#/flight/' + newSelectedFlight.flight_number);
+        }
     }
 
     _onTicketChange() {
