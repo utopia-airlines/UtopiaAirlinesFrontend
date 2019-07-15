@@ -1,7 +1,7 @@
+// @ts-nocheck
 /* eslint-disable */
 
-import jquery from 'jquery';
-window.$ = window.jQuery=jquery;
+"use strict";
 
 import React from 'react';
 import ReactDom from 'react-dom';

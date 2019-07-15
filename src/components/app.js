@@ -3,42 +3,43 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
-import {Header} from './header.js';
-import {Home} from './home.js';
-import {Books} from './books.js';
-import BookStore from '../stores/bookStore';
+import Header from './header';
+import {Flights} from './Flights';
+import FlightStore from '../stores/flightStore';
+import {FlightList} from './FlightList';
+import {FlightActions} from '../actions/flightActions';
 
-
-export class App extends React.Component{
+export class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            bookList:[]
+            flightList:[]
         };
     }
 
     render() {
-        return(
+        return (
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path='/' component={Home}/>
-                    <Route path='/books' render={(props) => (<Books {...props} bookList={this.state.bookList} />)}/>
+                    <Route exact path='/' component={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
+                    <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                 </Switch>
             </div>
         );
     }
 
-    componentWillMount(){
-        BookStore.addChangeListener(this._onBookChange.bind(this));
+    componentDidMount() {
+        FlightStore.addChangeListener(this._onFlightChange.bind(this));
+        FlightActions.filterSearch((arg) => arg);
     }
 
-    componentWillUnmount(){
-        BookStore.removeChangeListener(this._onBookChange.bind(this));
+    componentWillUnmount() {
+        FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     }
 
-    _onBookChange(){
-        this.setState({bookList: BookStore.getAllBooks()});
+    _onFlightChange() {
+        this.setState({flightList: FlightStore.getFilteredFlights()});
     }
 }
