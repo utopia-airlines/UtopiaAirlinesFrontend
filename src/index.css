@@ -1,0 +1,147 @@
+/* Global */
+a:link {
+  color: rgb(250, 157, 19);
+}
+
+.app-container {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  height: calc(100vh - 75px);
+  background: #d4d4d4;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.orange-btn.btn.btn-sm {
+  background-color: rgb(228, 143, 17);
+  color: white;
+}
+.orange-btn.btn.btn-sm:active {
+  background-color: rgba(228, 144, 17, 0.7);
+  color: white;
+}
+
+.blue-btn.btn.btn-sm,
+.btn.btn-primary.blue-btn {
+  background-color: #040348;
+  color: rgb(250, 157, 19);
+}
+
+.blue-btn.btn.btn-sm:active,
+.btn.btn-primary.blue-btn:active {
+  background-color: #040348a9;
+}
+
+/* Still Don't work */
+/* a:hover {
+  color: rgba(228, 144, 17, 0.801);
+}
+
+a:active {
+  color: rgba(228, 144, 17, 0.801);
+} */
+
+/* Navbar | Header */
+.navBar {
+  top: 0;
+  height: 75px;
+  width: 100%;
+  background: #363636;
+  color: rgb(250, 157, 19);
+  border-color: #262626;
+  position: fixed;
+  display: flex;
+  align-items: center;
+}
+
+.navBar > * {
+  padding-top: .3125rem;
+  padding-bottom: .3125rem;
+}
+
+.logo {
+  padding-left: 25px;
+  flex-grow: 1;
+}
+.logo img {
+  width: 120px;
+}
+
+ul.navbar-nav > .nav-item {
+  padding-left: 10px;
+  align-items: center;
+  display: flex;
+}
+
+ul.navbar-nav > .nav-item > * {
+}
+
+button#booking-search {
+  background: none;
+  color: inherit;
+  border: none; 
+  padding: 0!important;
+  font: inherit;
+  cursor: pointer;
+}
+
+#booking-search-bar { 
+  
+}
+
+/* HomePage */
+.flights-table {
+  background: white;
+}
+
+#flight-search-bar {
+  background: #040348;
+  color: lightgray;
+}
+
+#flight-search-bar th div{
+  display: grid;
+}
+
+.flights-table tbody {
+
+}
+
+.flights-table tr {
+
+}
+
+/* Flight Info */
+.seat-list {
+  background: white;
+  width: 70%;
+  min-width: fit-content;
+}
+
+.flight_info .col-4 {
+  text-align: center;
+}
+
+#flight_search_bar input {
+  width: 40px;
+}
+
+.button-col {
+  width:1%;
+  white-space:nowrap;
+}
+
+/* Ticket */
+
+.ticket-container {
+  background: white;
+  width: 70%;
+  min-width: fit-content;
+}
+
+.modal-footer.custom, .modal-header.custom {
+  align-items: center;
+  flex-direction: column;
+}
