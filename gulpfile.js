@@ -25,27 +25,33 @@ var config = {
 }
 
 //Start a local development server
-gulp.task('connect', function() {
-    return connect.server({
+function connectFunction(cb) {
+    connect.server({
         root: ['dist'],
         port: config.port,
         base: config.devBaseUrl,
         livereload: true
     });
-});
+    cb();
+}
+gulp.task('connect', connectFunction);
 
-gulp.task('open', gulp.series('connect', function() {
+function openFunction() {
     return gulp.src('dist/index.html')
         .pipe(open({ uri: config.devBaseUrl + ':' + config.port + '/'}));
-}));
+}
 
-gulp.task('html', function() {
+gulp.task('open', gulp.series(connectFunction, openFunction));
+
+function htmlFunction() {
     return gulp.src(config.paths.html)
         .pipe(gulp.dest(config.paths.dist))
         .pipe(connect.reload());
-});
+}
 
-gulp.task('js', function() {
+gulp.task('html', htmlFunction);
+
+function jsFunction() {
     return browserify(config.paths.mainJs)
         .transform(babelify, {presets: ["@babel/preset-env", "@babel/preset-react"]})
         .bundle()
@@ -53,30 +59,41 @@ gulp.task('js', function() {
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(config.paths.dist + '/scripts'))
         .pipe(connect.reload());
-});
+}
 
-gulp.task('css', function() {
+gulp.task('js', jsFunction);
+
+function cssFunction() {
     return gulp.src(config.paths.css)
         .pipe(concat('bundle.css'))
         .pipe(gulp.dest(config.paths.dist + '/css'));
-});
+}
 
-gulp.task('images', function() {
+gulp.task('css', cssFunction);
+
+function imagesFunction() {
     return gulp.src(config.paths.images)
         .pipe(gulp.dest(config.paths.dist + "/images"))
         .pipe(connect.reload());
-});
+}
 
-gulp.task('lint', function() {
+gulp.task('images', imagesFunction);
+
+function lintFunction() {
     return gulp.src(config.paths.js)
         .pipe(lint())
         .pipe(lint.format());
-});
+}
 
-gulp.task('watch', function() {
-    gulp.watch(config.paths.html, gulp.series('html'));
-    gulp.watch(config.paths.js, gulp.series('js', 'lint'));
-    return;
-});
+gulp.task('lint', lintFunction);
 
-gulp.task('default', gulp.series('html', 'js', 'css', 'images', 'lint', 'open', 'watch'));
+function watchFunction(cb) {
+    gulp.watch(config.paths.html, htmlFunction);
+    gulp.watch(config.paths.js, gulp.series(jsFunction, lintFunction));
+    cb();
+}
+
+gulp.task('watch', watchFunction);
+
+gulp.task('default', gulp.series(htmlFunction, jsFunction, cssFunction, imagesFunction, lintFunction,
+    connectFunction, openFunction, watchFunction));
