@@ -75,9 +75,6 @@ ul.navbar-nav > .nav-item {
   display: flex;
 }
 
-ul.navbar-nav > .nav-item > * {
-}
-
 button#booking-search {
   background: none;
   color: inherit;
@@ -85,10 +82,6 @@ button#booking-search {
   padding: 0!important;
   font: inherit;
   cursor: pointer;
-}
-
-#booking-search-bar { 
-  
 }
 
 /* HomePage */
@@ -103,14 +96,6 @@ button#booking-search {
 
 #flight-search-bar th div{
   display: grid;
-}
-
-.flights-table tbody {
-
-}
-
-.flights-table tr {
-
 }
 
 /* Flight Info */
