@@ -90,6 +90,7 @@ function lintFunction() {
 gulp.task('lint', lintFunction);
 
 function watchFunction(cb) {
+    gulp.watch(config.paths.css, cssFunction);
     gulp.watch(config.paths.html, htmlFunction);
     gulp.watch(config.paths.js, gulp.series(jsFunction, lintFunction));
     cb();
