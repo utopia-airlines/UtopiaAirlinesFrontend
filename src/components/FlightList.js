@@ -3,10 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
+import { FlightActions } from '../actions/flightActions';
 
 function createFlightRow(flight) {
     return (
-        <tr key={flight.flight_number}>
+        <tr key={flight.flight_number} onClick={() => FlightActions.selectFlight(flight)}>
             <td> {flight.flight_number} </td>
             <td> {flight.departure} </td>
             <td> {flight.departure_date} </td>
