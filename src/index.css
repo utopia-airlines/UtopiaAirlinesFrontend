@@ -45,7 +45,7 @@ a:active {
 } */
 
 /* Navbar | Header */
-.navBar {
+.navbar {
   top: 0;
   height: 75px;
   width: 100%;
@@ -57,7 +57,7 @@ a:active {
   align-items: center;
 }
 
-.navBar > * {
+.navbar > * {
   padding-top: .3125rem;
   padding-bottom: .3125rem;
 }
