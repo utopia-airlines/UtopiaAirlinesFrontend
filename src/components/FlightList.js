@@ -4,14 +4,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import { FlightActions } from '../actions/flightActions';
+import {datePart, timePart} from '../util/datetime';
 
+function prettyPrintDate(dateString) {
+    return `${timePart(dateString)} ${datePart(dateString)}`;
+}
 function createFlightRow(flight) {
     return (
         <tr key={flight.flight_number} onClick={() => FlightActions.selectFlight(flight)}>
             <td> {flight.flight_number} </td>
-            <td> {flight.departure_date} </td>
+            <td> {prettyPrintDate(flight.departure_date)} </td>
             <td> {flight.departure} </td>
-            <td> {flight.arrival_date} </td>
+            <td> {prettyPrintDate(flight.arrival_date)} </td>
             <td> {flight.destination} </td>
             <td> <button className="blue-btn btn button-sm">
                 Select{/* FIXME: Add handler */}</button></td>
