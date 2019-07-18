@@ -1,9 +1,13 @@
+// TODO: Customize the formatting based on the user's locale!
+
 function datePart(dateTimeString) {
-    return new Date(dateTimeString).toDateString();
+    const date = new Date(dateTimeString);
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 }
 
 function timePart(dateTimeString) {
-    return new Date(dateTimeString).toTimeString();
+    const date = new Date(dateTimeString);
+    return `${date.getHours()}:${date.getMinutes()}`;
 }
 
 exports.datePart = datePart;
