@@ -30,11 +30,13 @@ export class App extends React.Component {
         return (
             <div>
                 <Header error={this.state.globalError} />
-                <Switch>
-                    <Route exact path='/' component={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
-                    <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
-                    <Route path='/flight' component={(props) => (<FlightDetails {...props} />)}/>
-                </Switch>
+                <div className="app-container">
+                    <Switch>
+                        <Route exact path='/' component={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
+                        <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
+                        <Route path='/flight' component={(props) => (<FlightDetails {...props} />)}/>
+                    </Switch>
+                </div>
             </div>
         );
     }
