@@ -3,6 +3,36 @@ import Table from 'react-bootstrap/Table';
 import PropTypes from 'prop-types';
 import {datePart, timePart} from '../util/datetime';
 
+function getSeatClass(cls) {
+    switch (cls) {
+        case '1':
+            return 'First';
+        case '2':
+            return 'Business';
+        case '3':
+            return 'Economy';
+        default:
+            return 'Unknown';
+    }
+}
+
+function createSeatRow(seat) {
+    const seatId = `${seat.seat_row}${seat.seat}`;
+    return (
+        <tr key={seatId} onClick={null}>
+            {/*FIXME: Handle clicks on the row by doing something!*/}
+            <td> {seatId} </td>
+            <td> $100 </td>
+            <td> {getSeatClass(seat.class)} </td>
+            <td className="button-col">
+                <button className="blue-btn btn btn-sm" >
+                    Select
+                </button>
+            </td>
+        </tr>
+    );
+}
+
 export class FlightDetails extends React.Component {
     render() {
         return (
@@ -35,17 +65,7 @@ export class FlightDetails extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {/*
-                        <tr>
-                            <td>1-a</td>
-                            <td>$100</td>
-                            <td>First</td>
-                            <td className="button-col">
-                                <button className="blue-btn btn btn-sm" >
-                                    Select
-                                </button>
-                            </td>
-                        </tr> */}
+                        {this.props.seatList.map(createSeatRow)}
                     </tbody>
                 </Table>
             </div>);
@@ -53,5 +73,6 @@ export class FlightDetails extends React.Component {
 }
 
 FlightDetails.propTypes = {
-    flight: PropTypes.object.isRequired
+    flight: PropTypes.object.isRequired,
+    seatList: PropTypes.array.isRequired
 };

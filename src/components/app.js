@@ -18,6 +18,7 @@ export class App extends React.Component {
         this.state = {
             flightList:[],
             selectedFlight: null,
+            seatList: [],
             selectedSeat: null,
             bookedTicket: null,
             bookingFailureReason: null,
@@ -33,7 +34,7 @@ export class App extends React.Component {
                 <div className="app-container">
                     <Switch>
                         <Route exact path='/' render={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
-                        <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails flight={this.state.selectedFlight} {...props} />)}/>
+                        <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails flight={this.state.selectedFlight} seatList={this.state.seatList} {...props} />)}/>
                         <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                     </Switch>
                 </div>
@@ -57,7 +58,8 @@ export class App extends React.Component {
         const newSelectedFlight = FlightStore.getSelectedFlight();
         this.setState({
             flightList: FlightStore.getFilteredFlights(),
-            selectedFlight: newSelectedFlight
+            selectedFlight: newSelectedFlight,
+            seatList: FlightStore.getSeats()
         });
         if (newSelectedFlight && oldLocation !== '#/flight/' + newSelectedFlight.flight_number) {
             window.location.hash = '#/flight/' + newSelectedFlight.flight_number;
