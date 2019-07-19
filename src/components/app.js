@@ -49,6 +49,7 @@ export class App extends React.Component {
 
     componentWillUnmount() {
         FlightStore.removeChangeListener(this._onFlightChange.bind(this));
+        TicketStore.removeChangeListener(this._onTicketChange.bind(this));
     }
 
     _onFlightChange() {
