@@ -53,14 +53,14 @@ export class App extends React.Component {
     }
 
     _onFlightChange() {
-        const oldSelectedFlight = this.state.selectedFlight;
+        const oldLocation = window.location.hash;
         const newSelectedFlight = FlightStore.getSelectedFlight();
         this.setState({
             flightList: FlightStore.getFilteredFlights(),
             selectedFlight: newSelectedFlight
         });
-        if (oldSelectedFlight !== newSelectedFlight && newSelectedFlight) {
-            history.pushState(null, 'Flight Details', '/#/flight/' + newSelectedFlight.flight_number);
+        if (newSelectedFlight && oldLocation !== '#/flight/' + newSelectedFlight.flight_number) {
+            window.location.hash = '#/flight/' + newSelectedFlight.flight_number;
         }
     }
 
