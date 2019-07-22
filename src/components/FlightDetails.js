@@ -2,6 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import PropTypes from 'prop-types';
 import {datePart, timePart} from '../util/datetime';
+import { TicketActions } from '../actions/ticketActions';
 
 function getSeatClass(cls) {
     switch (cls) {
@@ -16,11 +17,11 @@ function getSeatClass(cls) {
     }
 }
 
-function createSeatRow(seat) {
+function createSeatRow(flight, seat) {
+    // TODO: Once seat object includes flight details, drop flight parameter
     const seatId = `${seat.seat_row}${seat.seat}`;
     return (
-        <tr key={seatId} onClick={null}>
-            {/*FIXME: Handle clicks on the row by doing something!*/}
+        <tr key={seatId} onClick={() => TicketActions.selectSeat(flight, seat.seat_row, seat.seat)}>
             <td> {seatId} </td>
             <td> $100 </td>
             <td> {getSeatClass(seat.class)} </td>
