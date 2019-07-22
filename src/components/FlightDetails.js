@@ -35,22 +35,34 @@ function createSeatRow(seat) {
 
 export class FlightDetails extends React.Component {
     render() {
+        let flight;
+        if (this.props.flight) {
+            flight = this.props.flight;
+        } else {
+            flight = {
+                departure: 'Unknown',
+                departure_date: 'Unknown',
+                destination: 'Unknown ',
+                arrival_date: 'Unknown',
+                flight_number: 'Placeholder'
+            }
+        }
         return (
             <div className="seat-list">
                 <div className="flight_info container">
                     <div className="row">
-                        <div className="col-4">
-                            <div> {this.props.flight.departure} </div>
-                            <div> {datePart(this.props.flight.departure_date)} </div>
-                            <div> {timePart(this.props.flight.departure_date)} </div>
+                        <div className="col-4" key={flight.departure}>
+                            <div> {flight.departure} </div>
+                            <div> {datePart(flight.departure_date)} </div>
+                            <div> {timePart(flight.departure_date)} </div>
                         </div>
                         <div className="col-4">
                             <img src="./resources/plane_icon_72.png" />
                         </div>
-                        <div className="col-4">
-                            <div> {this.props.flight.destination} </div>
-                            <div> {datePart(this.props.flight.arrival_date)} </div>
-                            <div> {timePart(this.props.flight.arrival_date)} </div>
+                        <div className="col-4" key={flight.destination}>
+                            <div> {flight.destination} </div>
+                            <div> {datePart(flight.arrival_date)} </div>
+                            <div> {timePart(flight.arrival_date)} </div>
                         </div>
                     </div>
                 </div>
@@ -73,6 +85,6 @@ export class FlightDetails extends React.Component {
 }
 
 FlightDetails.propTypes = {
-    flight: PropTypes.object.isRequired,
-    seatList: PropTypes.array.isRequired
+    flight: PropTypes.object,
+    seatList: PropTypes.array
 };
