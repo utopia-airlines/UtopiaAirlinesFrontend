@@ -54,25 +54,22 @@ Dispatcher.register((action) => {
             } else {
                 _flightStore.selected = null;
             }
-            FlightStore.emitChange();
             break;
         case FLIGHT_ACTIONS.SELECT_FLIGHT:
             _flightStore.selected = action.value;
             FlightActions.seatsForFlight(action.value);
-            FlightStore.emitChange();
             break;
         case FLIGHT_ACTIONS.RETURN_TO_HOMEPAGE:
             _flightStore.filter = null;
             _flightStore.selected = null;
-            FlightStore.emitChange();
             break;
         case FLIGHT_ACTIONS.SEATS_FOR_FLIGHT:
             _flightStore.seats = action.value;
-            FlightStore.emitChange();
             break;
         default:
             return;
     }
+    FlightStore.emitChange();
 });
 
 export default FlightStore;
