@@ -49,7 +49,11 @@ Dispatcher.register((action) => {
     switch (action.type) {
         case FLIGHT_ACTIONS.FILTER_SEARCH:
             _flightStore.filteredFlights = action.value;
-            _flightStore.selected = null;
+            if (typeof _flightStore.selected === 'number' || typeof _flightStore.selected === 'string') {
+                _flightStore.selected = _flightStore.filteredFlights.find((flight) => flight.flight_number == _flightStore.selected);
+            } else {
+                _flightStore.selected = null;
+            }
             FlightStore.emitChange();
             break;
         case FLIGHT_ACTIONS.SELECT_FLIGHT:

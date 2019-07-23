@@ -58,7 +58,13 @@ export class App extends React.Component {
     componentDidMount() {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
         TicketStore.addChangeListener(this._onTicketChange.bind(this));
-        FlightActions.filterSearch((arg) => arg);
+        if (/^#\/flight\/[0-9]*\/?$/.test(window.location.hash)) {
+            const flightFromUrl = window.location.hash.replace(/^#\/flight\//, '').replace(/\/$/, '');
+            FlightActions.filterSearch((arg) => arg);
+            FlightActions.selectFlight(flightFromUrl);
+        } else {
+            FlightActions.filterSearch((arg) => arg);
+        }
     }
 
     componentWillUnmount() {
@@ -68,13 +74,14 @@ export class App extends React.Component {
 
     _onFlightChange() {
         const oldLocation = window.location.hash;
+        const oldSelectedFlight = this.state.selectedFlight;
         const newSelectedFlight = FlightStore.getSelectedFlight();
         this.setState({
             flightList: FlightStore.getFilteredFlights(),
             selectedFlight: newSelectedFlight,
             seatList: FlightStore.getSeats()
         });
-        if (newSelectedFlight && oldLocation !== '#/flight/' + newSelectedFlight.flight_number) {
+        if ((newSelectedFlight && oldLocation !== '#/flight/' + newSelectedFlight.flight_number) || (newSelectedFlight && !oldSelectedFlight)) {
             window.location.hash = '#/flight/' + newSelectedFlight.flight_number;
         }
     }
