@@ -58,12 +58,10 @@ export class App extends React.Component {
     componentDidMount() {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
         TicketStore.addChangeListener(this._onTicketChange.bind(this));
+        FlightActions.filterSearch((arg) => arg);
         if (/^#\/flight\/[0-9]*\/?$/.test(window.location.hash)) {
             const flightFromUrl = window.location.hash.replace(/^#\/flight\//, '').replace(/\/$/, '');
-            FlightActions.filterSearch((arg) => arg);
             FlightActions.selectFlight(flightFromUrl);
-        } else {
-            FlightActions.filterSearch((arg) => arg);
         }
     }
 
