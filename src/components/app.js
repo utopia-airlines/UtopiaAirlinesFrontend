@@ -28,13 +28,26 @@ export class App extends React.Component {
     }
 
     render() {
+        let currentFlight;
+        if (typeof this.state.selectedFlight === 'string' || typeof this.state.selectedFlight === 'number') {
+            currentFlight = {
+                departure: 'Unknown',
+                departure_date: 'Unknown',
+                destination: 'Unknown ',
+                arrival_date: 'Unknown',
+                flight_number: this.state.selectedFlight
+            };
+        } else {
+            currentFlight = this.state.selectedFlight;
+        }
+
         return (
             <div>
                 <Header error={this.state.globalError} />
                 <div className="app-container">
                     <Switch>
                         <Route exact path='/' render={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
-                        <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails key={this.state.selectedFlight} flight={this.state.selectedFlight} seatList={this.state.seatList} {...props} />)}/>
+                        <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails key={currentFlight} flight={currentFlight} seatList={this.state.seatList} {...props} />)}/>
                         <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                     </Switch>
                 </div>
