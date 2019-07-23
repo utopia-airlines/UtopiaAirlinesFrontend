@@ -11,6 +11,20 @@ import {FlightActions} from '../actions/flightActions';
 import {FlightDetails} from './FlightDetails';
 import TicketStore from '../stores/ticketStore';
 
+function currentFlightOrPlaceholder(flight) {
+    if (typeof flight === 'string' || typeof flight === 'number') {
+        return {
+            departure: 'Unknown',
+            departure_date: 'Unknown',
+            destination: 'Unknown ',
+            arrival_date: 'Unknown',
+            flight_number: flight
+        };
+    } else {
+        return flight;
+    }
+}
+
 export class App extends React.Component {
 
     constructor(props) {
@@ -28,19 +42,7 @@ export class App extends React.Component {
     }
 
     render() {
-        let currentFlight;
-        if (typeof this.state.selectedFlight === 'string' || typeof this.state.selectedFlight === 'number') {
-            currentFlight = {
-                departure: 'Unknown',
-                departure_date: 'Unknown',
-                destination: 'Unknown ',
-                arrival_date: 'Unknown',
-                flight_number: this.state.selectedFlight
-            };
-        } else {
-            currentFlight = this.state.selectedFlight;
-        }
-
+        const currentFlight = currentFlightOrPlaceholder(this.state.selectedFlight);
         return (
             <div>
                 <Header error={this.state.globalError} />
