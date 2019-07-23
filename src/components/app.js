@@ -34,7 +34,7 @@ export class App extends React.Component {
                 <div className="app-container">
                     <Switch>
                         <Route exact path='/' render={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
-                        <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails flight={this.state.selectedFlight} seatList={this.state.seatList} {...props} />)}/>
+                        <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails key={this.state.selectedFlight} flight={this.state.selectedFlight} seatList={this.state.seatList} {...props} />)}/>
                         <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                     </Switch>
                 </div>
