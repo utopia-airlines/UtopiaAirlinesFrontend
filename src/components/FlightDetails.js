@@ -37,20 +37,23 @@ function createSeatRow(flight, seat) {
     );
 }
 
+function flightOrPlaceholder(flight) {
+    if (flight) {
+        return flight;
+    } else {
+        return {
+            departure: 'Unknown',
+            departure_date: 'Unknown',
+            destination: 'Unknown ',
+            arrival_date: 'Unknown',
+            flight_number: 'Placeholder'
+        };
+    }
+}
+
 export class FlightDetails extends React.Component {
     render() {
-        let flight;
-        if (this.props.flight) {
-            flight = this.props.flight;
-        } else {
-            flight = {
-                departure: 'Unknown',
-                departure_date: 'Unknown',
-                destination: 'Unknown ',
-                arrival_date: 'Unknown',
-                flight_number: 'Placeholder'
-            }
-        }
+        const flight = flightOrPlaceholder(this.props.flight);
         return (
             <div className="seat-list">
                 <div className="flight_info container">
