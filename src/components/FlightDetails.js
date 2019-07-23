@@ -51,28 +51,36 @@ function flightOrPlaceholder(flight) {
     }
 }
 
+function FlightDetailsHeader(props) {
+    return (<div className="flight_info container">
+        <div className="row">
+            <div className="col-4" key={props.flight.departure}>
+                <div> {props.flight.departure} </div>
+                <div> {datePart(props.flight.departure_date)} </div>
+                <div> {timePart(props.flight.departure_date)} </div>
+            </div>
+            <div className="col-4">
+                <img src="./resources/plane_icon_72.png" />
+            </div>
+            <div className="col-4" key={props.flight.destination}>
+                <div> {props.flight.destination} </div>
+                <div> {datePart(props.flight.arrival_date)} </div>
+                <div> {timePart(props.flight.arrival_date)} </div>
+            </div>
+        </div>
+    </div>);
+}
+
+FlightDetailsHeader.propTypes = {
+    flight: PropTypes.object.isRequired
+}
+
 export class FlightDetails extends React.Component {
     render() {
         const flight = flightOrPlaceholder(this.props.flight);
         return (
             <div className="seat-list">
-                <div className="flight_info container">
-                    <div className="row">
-                        <div className="col-4" key={flight.departure}>
-                            <div> {flight.departure} </div>
-                            <div> {datePart(flight.departure_date)} </div>
-                            <div> {timePart(flight.departure_date)} </div>
-                        </div>
-                        <div className="col-4">
-                            <img src="./resources/plane_icon_72.png" />
-                        </div>
-                        <div className="col-4" key={flight.destination}>
-                            <div> {flight.destination} </div>
-                            <div> {datePart(flight.arrival_date)} </div>
-                            <div> {timePart(flight.arrival_date)} </div>
-                        </div>
-                    </div>
-                </div>
+                <FlightDetailsHeader flight={flight} />
 
                 <Table className="table">
                     <thead>
