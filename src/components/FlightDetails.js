@@ -7,10 +7,13 @@ import { TicketActions } from '../actions/ticketActions';
 function getSeatClass(cls) {
     switch (cls) {
         case '1':
+        case 1:
             return 'First';
         case '2':
+        case 2:
             return 'Business';
         case '3':
+        case 3:
             return 'Economy';
         default:
             return 'Unknown';
@@ -78,7 +81,7 @@ export class FlightDetails extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.seatList.map(createSeatRow)}
+                        {this.props.seatList.map((seat) => createSeatRow(flight, seat))}
                     </tbody>
                 </Table>
             </div>);
