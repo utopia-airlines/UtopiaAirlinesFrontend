@@ -45,15 +45,20 @@ class FlightStoreClass extends EventEmitter {
 
 const FlightStore = new FlightStoreClass();
 
+function maybeSaveSelectedFlight(value) {
+    if (typeof value === 'number' || typeof value === 'string') {
+        // We deliberately use == rather than === here, because we want '1' to match 1 or vice versa
+        _flightStore.selected = _flightStore.filteredFlights.find((flight) => flight.flight_number == value);
+    } else {
+        _flightStore.selected = null;
+    }
+}
+
 Dispatcher.register((action) => {
     switch (action.type) {
         case FLIGHT_ACTIONS.FILTER_SEARCH:
             _flightStore.filteredFlights = action.value;
-            if (typeof _flightStore.selected === 'number' || typeof _flightStore.selected === 'string') {
-                _flightStore.selected = _flightStore.filteredFlights.find((flight) => flight.flight_number == _flightStore.selected);
-            } else {
-                _flightStore.selected = null;
-            }
+            maybeSaveSelectedFlight(_flightStore.selected);
             break;
         case FLIGHT_ACTIONS.SELECT_FLIGHT:
             _flightStore.selected = action.value;
