@@ -58,7 +58,7 @@ a:active {
   align-items: center;
 }
 
-.navbar > * {
+.navbar > div, .navbar > span, .navbar > form {
   padding-top: .3125rem;
   padding-bottom: .3125rem;
 }
