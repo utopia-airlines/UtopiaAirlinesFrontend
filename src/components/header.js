@@ -35,7 +35,7 @@ function OptionalError(props) {
 function BookingCodeForm() {
     return (
         <Form inline className="float-right navbar-nav flex-row ml-md-auto d-none d-sm-flex"
-            onSubmit={handleBookingCodeSubmission}>{/* FIXME: This doesn't actually right-align!*/}
+            onSubmit={handleBookingCodeSubmission}>
             <InputGroup>
                 <InputGroup.Prepend id="booking-code-input-label">
                     <Navbar.Text>Enter booking code:&nbsp;&nbsp;</Navbar.Text>
