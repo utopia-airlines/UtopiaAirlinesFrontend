@@ -49,7 +49,7 @@ export function FlightList(props) {
     return (
         <div>
             <h1>Available Flights</h1>
-            <Table className="table flights-table">
+            <Table responsive className="table flights-table">
                 <FlightListHeader />
                 <tbody>
                     {props.flightList.map(createFlightRow)}

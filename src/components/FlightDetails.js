@@ -82,7 +82,7 @@ export class FlightDetails extends React.Component {
             <div className="seat-list">
                 <FlightDetailsHeader flight={flight} />
 
-                <Table className="table">
+                <Table responsive className="table">
                     <thead>
                         <tr>
                             <th scope="col">Seat</th>

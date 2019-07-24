@@ -86,6 +86,10 @@ button#booking-search {
   cursor: pointer;
 }
 
+.table-responsive {
+  max-width: 100vw !important;
+}
+
 /* HomePage */
 .flights-table {
   background: white;
@@ -105,6 +109,7 @@ button#booking-search {
   background: white;
   width: 70%;
   min-width: fit-content;
+  max-width: 100%;
 }
 
 .flight_info .col-4 {
