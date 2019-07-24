@@ -60,7 +60,7 @@ function FlightDetailsHeader(props) {
                 <div> {timePart(props.flight.departure_date)} </div>
             </div>
             <div className="col-4">
-                <img src="./resources/plane_icon_72.png" />
+                <img src="./images/plane_icon.png" width={72} />
             </div>
             <div className="col-4" key={props.flight.destination}>
                 <div> {props.flight.destination} </div>
