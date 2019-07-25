@@ -64,7 +64,6 @@ export class BookingDetails extends React.Component {
     render() {
         const flight = getFlightFromBooking(this.props.booking);
         const seat = getSeatFromBooking(this.props.booking);
-        console.log(this.props.booking);
         return (
             <div className="ticket-container">
                 <div className="flight_info container">
