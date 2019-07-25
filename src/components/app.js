@@ -10,6 +10,8 @@ import {FlightList} from './FlightList';
 import {FlightActions} from '../actions/flightActions';
 import {FlightDetails} from './FlightDetails';
 import TicketStore from '../stores/ticketStore';
+import { BookingDetails } from './BookingDetails';
+import { TicketActions } from '../actions/ticketActions';
 
 function currentFlightOrPlaceholder(flight) {
     if (typeof flight === 'string' || typeof flight === 'number') {
@@ -22,6 +24,23 @@ function currentFlightOrPlaceholder(flight) {
         };
     } else {
         return flight;
+    }
+}
+
+function currentBookingOrPlaceholder(booking) {
+    if (typeof booking === 'string') {
+        return {
+            bookingId: booking,
+            price: 'Unknown',
+            reservationTimeout: 'Unknown',
+            reserved: null,
+            seatClass: 'Unknown',
+            flight: currentFlightOrPlaceholder('Unknown'),
+            row: 'Unknown',
+            seat: 'Unknown'
+        }
+    } else {
+        return booking;
     }
 }
 
@@ -43,6 +62,7 @@ export class App extends React.Component {
 
     render() {
         const currentFlight = currentFlightOrPlaceholder(this.state.selectedFlight);
+        const currentBooking = currentBookingOrPlaceholder(this.state.bookedTicket);
         return (
             <div>
                 <Header error={this.state.globalError} />
@@ -51,6 +71,7 @@ export class App extends React.Component {
                         <Route exact path='/' render={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
                         <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails key={currentFlight} flight={currentFlight} seatList={this.state.seatList} {...props} />)}/>
                         <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
+                        <Route path='/booking/:bookingId' render={() => (<BookingDetails key={currentBooking} booking={currentBooking} />)} />
                     </Switch>
                 </div>
             </div>
@@ -64,6 +85,9 @@ export class App extends React.Component {
         if (/^#\/flight\/[0-9]*\/?$/.test(window.location.hash)) {
             const flightFromUrl = window.location.hash.replace(/^#\/flight\//, '').replace(/\/$/, '');
             FlightActions.selectFlight(flightFromUrl);
+        } else if (/^#\/booking\/[0-9a-z]*\/?$/.test(window.location.hash)) {
+            const bookingFromUrl = window.location.hash.replace(/^#\/booking\//, '').replace(/\/$/, '');
+            TicketActions.showBookingDetails(bookingFromUrl);
         }
     }
 
@@ -87,14 +111,16 @@ export class App extends React.Component {
     }
 
     _onTicketChange() {
+        const oldLocation = window.location.hash;
         const oldBookedTicket = this.state.bookedTicket;
         const newBookedTicket = TicketStore.getBookedTicket();
         this.setState({
             globalError: TicketStore.getGlobalError(),
             bookedTicket: newBookedTicket
         });
-        if (oldBookedTicket !== newBookedTicket && newBookedTicket) {
-            history.pushState(null, 'Booking Details', '/#/booking/' + newBookedTicket.data.bookingId);
+        if ((newBookedTicket && oldLocation !== '#/booking/' + newBookedTicket.bookingId) ||
+                (oldBookedTicket !== newBookedTicket && newBookedTicket)) {
+            window.location.hash = '#/booking/' + newBookedTicket.bookingId;
         }
     }
 }

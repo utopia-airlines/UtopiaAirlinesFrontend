@@ -29,7 +29,7 @@ export const TicketActions = {
         promiseResult.then((val) => {
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.BOOK_TICKET,
-                value: val
+                value: val.data
             });
         }, (err) => {
             Dispatcher.dispatch({
@@ -41,7 +41,9 @@ export const TicketActions = {
 
     showBookingDetails: function (ticket) {
         let booking;
-        if (ticket.bookingId) {
+        if (typeof ticket === 'string') {
+            booking = TicketApi.getBookingDetailsById(ticket);
+        } else if (ticket.bookingId) {
             booking = TicketApi.getBookingDetailsById(ticket.bookingId);
         } else {
             booking = TicketApi.getBookingDetailsBySeat(ticket.flight, ticket.row, ticket.seat);
@@ -49,7 +51,7 @@ export const TicketActions = {
         booking.then((val) => { // TODO: what if booking invalid (error returned)?
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
-                value: val
+                value: val.data
             });
         }, (err) => {
             console.log(err);
@@ -71,7 +73,7 @@ export const TicketActions = {
         promiseResult.then((val) => {
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
-                value: val
+                value: val.data
             });
         }, () => {
             Dispatcher.dispatch({
