@@ -9,6 +9,18 @@ const FlightApi = {
         axios.get(Config.api + '/flights').then((response) => {
             cb(filter(response.data));
         });
+    },
+
+    getSeats: function(flight, cb) {
+        let flightNumber;
+        if (flight.flight_number) {
+            flightNumber = flight.flight_number;
+        } else {
+            flightNumber = flight;
+        }
+        axios.get(Config.api + '/flight/' + flightNumber + '/seats').then((response) => {
+            cb(response.data);
+        });
     }
 }
 
