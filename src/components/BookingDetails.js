@@ -3,7 +3,14 @@ import { datePart, timePart } from '../util/datetime';
 import PropTypes from 'prop-types';
 
 function getFlightFromBooking(booking) {
-    if (booking.flight) {
+    if (!booking) {
+        return {
+            departureDate: 'Unknown',
+            departureAirport: 'Unknown',
+            destination: 'Unknown',
+            arrivalDate: 'Unknown'
+        };
+    } else if (booking.flight) {
         return booking.flight;
     } else if (booking.id) {
         return booking.id.flight;
@@ -13,6 +20,9 @@ function getFlightFromBooking(booking) {
 }
 
 function getSeatFromBooking(booking) {
+    if (!booking) {
+        return undefined;
+    }
     let row;
     if (booking.row) {
         row = booking.row;
@@ -45,7 +55,7 @@ function airportToString(airport) {
 }
 
 function priceColumn(booking) {
-    if (booking.price) {
+    if (booking && booking.price) {
         return <div><div>Price Paid:</div><div>{booking.price}</div></div>;
     } else {
         return <div><div>Price:</div><div>$100</div></div>;
@@ -53,7 +63,9 @@ function priceColumn(booking) {
 }
 
 function bookingStatusColumn(booking) {
-    if (booking.price) {
+    if (!booking) {
+        return <div><div>Booking Status:</div><div>Unknown</div></div>;
+    } else if (booking.price) {
         return <div><div>Booking Status:</div><div>Confirmed</div></div>;
     } else {
         return <div><div>Booking Status:</div><div>Pending Payment</div></div>;
@@ -93,5 +105,5 @@ export function BookingDetails(props) {
 }
 
 BookingDetails.propTypes = {
-    booking: PropTypes.object.isRequired
+    booking: PropTypes.object
 }
