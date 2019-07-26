@@ -68,30 +68,28 @@ function endpointColumn(airport, date) {
     </div>;
 }
 
-export class BookingDetails extends React.Component {
-    render() {
-        const flight = getFlightFromBooking(this.props.booking);
-        const seat = getSeatFromBooking(this.props.booking);
-        return (
-            <div className="ticket-container">
-                <div className="flight_info container">
-                    <div className="row">
-                        {endpointColumn(flight.departureAirport, flight.departureDate)}
-                        <div className="col-sm">
-                            {/* TODO: Extract a component for this icon, since it also appears in FlightDetails */}
-                            <img src="./images/plane_icon.png" width={72} />
-                        </div>
-                        {endpointColumn(flight.destination, flight.arrivalDate)}
+export function BookingDetails(props) {
+    const flight = getFlightFromBooking(props.booking);
+    const seat = getSeatFromBooking(props.booking);
+    return (
+        <div className="ticket-container">
+            <div className="flight_info container">
+                <div className="row">
+                    {endpointColumn(flight.departureAirport, flight.departureDate)}
+                    <div className="col-sm">
+                        {/* TODO: Extract a component for this icon, since it also appears in FlightDetails */}
+                        <img src="./images/plane_icon.png" width={72} />
                     </div>
-                    <div className="row">
-                        <div className="col-sm" key={seat}>Seat: {seat}</div>
-                        <div className="col-sm">{priceColumn(this.props.booking)}</div>
-                        <div className="col-sm">{bookingStatusColumn(this.props.booking)}</div>
-                    </div>
+                    {endpointColumn(flight.destination, flight.arrivalDate)}
+                </div>
+                <div className="row">
+                    <div className="col-sm" key={seat}>Seat: {seat}</div>
+                    <div className="col-sm">{priceColumn(props.booking)}</div>
+                    <div className="col-sm">{bookingStatusColumn(props.booking)}</div>
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 BookingDetails.propTypes = {
