@@ -44,6 +44,20 @@ function currentBookingOrPlaceholder(booking) {
     }
 }
 
+const initialDataHandlers = [[/^#\/flight\/[0-9]*\/?$/, /^#\/flight\//, FlightActions.selectFlight],
+    [/^#\/booking\/[0-9a-z]*\/?$/, /^#\/booking\//, TicketActions.showBookingDetails]]
+
+function getDataFromInitialURL(url) {
+    for (const tuple of initialDataHandlers) {
+        const [pattern, replacement, callback] = tuple;
+        // @ts-ignore
+        if (pattern.test(url)) {
+            // @ts-ignore
+            callback(url.replace(replacement, '').replace(/\/$/, ''));
+        }
+    }
+}
+
 export class App extends React.Component {
 
     constructor(props) {
@@ -82,13 +96,7 @@ export class App extends React.Component {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
         TicketStore.addChangeListener(this._onTicketChange.bind(this));
         FlightActions.filterSearch((arg) => arg);
-        if (/^#\/flight\/[0-9]*\/?$/.test(window.location.hash)) {
-            const flightFromUrl = window.location.hash.replace(/^#\/flight\//, '').replace(/\/$/, '');
-            FlightActions.selectFlight(flightFromUrl);
-        } else if (/^#\/booking\/[0-9a-z]*\/?$/.test(window.location.hash)) {
-            const bookingFromUrl = window.location.hash.replace(/^#\/booking\//, '').replace(/\/$/, '');
-            TicketActions.showBookingDetails(bookingFromUrl);
-        }
+        getDataFromInitialURL(window.location.hash);
     }
 
     componentWillUnmount() {
