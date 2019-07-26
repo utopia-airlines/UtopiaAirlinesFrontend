@@ -61,7 +61,7 @@ function bookingStatusColumn(booking) {
 }
 
 function endpointColumn(airport, date) {
-    return <div className="col-sm" key={airport}>
+    return <div className="col-sm" key={airport.code}>
         <div>{airportToString(airport)}</div>
         <div>{datePart(date)}</div>
         <div>{timePart(date)}</div>
