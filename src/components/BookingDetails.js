@@ -46,17 +46,17 @@ function airportToString(airport) {
 
 function priceColumn(booking) {
     if (booking.price) {
-        return `Price Paid: ${booking.price}`;
+        return <div><div>Price Paid:</div><div>{booking.price}</div></div>;
     } else {
-        return 'Price: $100';
+        return <div><div>Price:</div><div>$100</div></div>;
     }
 }
 
 function bookingStatusColumn(booking) {
     if (booking.price) {
-        return 'Booking Status: Confirmed';
+        return <div><div>Booking Status:</div><div>Confirmed</div></div>;
     } else {
-        return 'Booking Status: Pending Payment';
+        return <div><div>Booking Status:</div><div>Pending Payment</div></div>;
     }
 }
 
