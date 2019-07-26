@@ -60,6 +60,14 @@ function bookingStatusColumn(booking) {
     }
 }
 
+function endpointColumn(airport, date) {
+    return <div className="col-sm" key={airport}>
+        <div>{airportToString(airport)}</div>
+        <div>{datePart(date)}</div>
+        <div>{timePart(date)}</div>
+    </div>;
+}
+
 export class BookingDetails extends React.Component {
     render() {
         const flight = getFlightFromBooking(this.props.booking);
@@ -68,20 +76,12 @@ export class BookingDetails extends React.Component {
             <div className="ticket-container">
                 <div className="flight_info container">
                     <div className="row">
-                        <div className="col-sm" key={flight.departure}>
-                            <div>{airportToString(flight.departureAirport)}</div>
-                            <div>{datePart(flight.departureDate)}</div>
-                            <div>{timePart(flight.departureDate)}</div>
-                        </div>
+                        {endpointColumn(flight.departureAirport, flight.departureDate)}
                         <div className="col-sm">
                             {/* TODO: Extract a component for this icon, since it also appears in FlightDetails */}
                             <img src="./images/plane_icon.png" width={72} />
                         </div>
-                        <div className="col-sm" key={flight.destination}>
-                        <div>{airportToString(flight.destination)}</div>
-                            <div>{datePart(flight.arrivalDate)}</div>
-                            <div>{timePart(flight.arrivalDate)}</div>
-                        </div>
+                        {endpointColumn(flight.destination, flight.arrivalDate)}
                     </div>
                     <div className="row">
                         <div className="col-sm" key={seat}>Seat: {seat}</div>
