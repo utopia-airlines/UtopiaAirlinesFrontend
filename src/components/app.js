@@ -11,6 +11,7 @@ import {FlightActions} from '../actions/flightActions';
 import {FlightDetails} from './FlightDetails';
 import TicketStore from '../stores/ticketStore';
 import { BookingDetails } from './BookingDetails';
+import { TicketDetails} from './TicketDetails';
 import { TicketActions } from '../actions/ticketActions';
 
 function currentFlightOrPlaceholder(flight) {
@@ -42,6 +43,11 @@ function currentBookingOrPlaceholder(booking) {
     } else {
         return booking;
     }
+}
+
+function currentTicketOrPlaceholder(ticket) {
+    ticket; // to appease 'unused' warning
+    return undefined;
 }
 
 const initialDataHandlers = [[/^#\/flight\/[0-9]*\/?$/, /^#\/flight\//, FlightActions.selectFlight],
@@ -77,12 +83,14 @@ export class App extends React.Component {
     render() {
         const currentFlight = currentFlightOrPlaceholder(this.state.selectedFlight);
         const currentBooking = currentBookingOrPlaceholder(this.state.bookedTicket);
+        const currentTicket = currentTicketOrPlaceholder(this.state.selectedSeat);
         return (
             <div>
                 <Header error={this.state.globalError} />
                 <div className="app-container">
                     <Switch>
                         <Route exact path='/' render={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
+                        <Route path='/flight/:flightNumber/row/:row/seat/:seat' render={(props) => <TicketDetails key={currentTicket} ticket={currentTicket} {...props} />} />
                         <Route path='/flight/:flightNumber' render={(props) => (<FlightDetails key={currentFlight} flight={currentFlight} seatList={this.state.seatList} {...props} />)}/>
                         <Route path='/flights' render={(props) => (<Flights {...props} flightList={this.state.flightList} />)}/>
                         <Route path='/booking/:bookingId' render={() => (<BookingDetails key={currentBooking} booking={currentBooking} />)} />
