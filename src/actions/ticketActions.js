@@ -18,9 +18,17 @@ export const TICKET_ACTIONS = {
 
 export const TicketActions = {
     selectSeat: function(flight, row, seat) {
+        let local;
+        if (typeof flight === 'number' || typeof flight === 'string') {
+            local = {
+                flight_number: flight
+            }
+        } else {
+            local = flight;
+        }
         Dispatcher.dispatch({
             type: TICKET_ACTIONS.SELECT_SEAT,
-            value: [flight, row, seat]
+            value: {flight: local, row, seat}
         });
     },
 

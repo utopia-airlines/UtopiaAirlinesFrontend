@@ -18,13 +18,13 @@ function getFlightFromTicket(ticket) {
     } else if (ticket.id) {
         return ticket.id.flight;
     } else {
-        return undefined;
+        return 'Unknown';
     }
 }
 
 function getSeatFromTicket(ticket) {
     if (!ticket) {
-        return undefined;
+        return 'Unknown';
     }
     let row;
     if (ticket.row) {
@@ -58,8 +58,14 @@ function airportToString(airport) {
 }
 
 function endpointColumn(airport, date) {
-    return <div className="col-sm" key={airport.code}>
-        <div>{airportToString(airport)}</div>
+    let local;
+    if (airport) {
+        local = airport;
+    } else {
+        local = { code: 'Unknown' };
+    }
+    return <div className="col-sm" key={local.code}>
+        <div>{airportToString(local)}</div>
         <div>{datePart(date)}</div>
         <div>{timePart(date)}</div>
     </div>;

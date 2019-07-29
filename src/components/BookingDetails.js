@@ -15,12 +15,14 @@ function getFlightFromBooking(booking) {
     } else if (booking.id) {
         return booking.id.flight;
     } else {
+        // console.log('Can\'t get flight from booking');
         return undefined;
     }
 }
 
 function getSeatFromBooking(booking) {
     if (!booking) {
+        // console.log('Can\'t get seat from booking');
         return undefined;
     }
     let row;

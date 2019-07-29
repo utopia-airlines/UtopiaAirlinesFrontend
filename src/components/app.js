@@ -46,12 +46,33 @@ function currentBookingOrPlaceholder(booking) {
 }
 
 function currentTicketOrPlaceholder(ticket) {
-    ticket; // to appease 'unused' warning
-    return undefined;
+    if (typeof ticket === 'object') {
+        return ticket;
+    } else {
+        return {
+            flight: {
+                arrival_date: 'Unknown',
+                departure: 'Unknown', // FIXME: Make backends return full airport
+                departure_date: 'Unknown',
+                destination: 'Unknown ', // terminal space is deliberate; this and departure are used as React keys
+                flight_number: 'Unknown'
+            },
+            row: 'Unknown',
+            seat: 'Unknown'
+        };
+    }
+}
+
+function parseSeatFromURL(fragment) {
+    const flight = fragment.replace(/\/row\/[0-9]*\/seat\/[A-Za-z]\/?$/, '');
+    const row = fragment.replace(/^[0-9]*\/row\//, '').replace(/\/seat\/[A-Za-z]\/?$/, '');
+    const seat = fragment.replace(/^[0-9]*\/row\/[0-9]*\/seat\//, '').replace(/\/?$/, '');
+    TicketActions.selectSeat(flight, row, seat);
 }
 
 const initialDataHandlers = [[/^#\/flight\/[0-9]*\/?$/, /^#\/flight\//, FlightActions.selectFlight],
-    [/^#\/booking\/[0-9a-z]*\/?$/, /^#\/booking\//, TicketActions.showBookingDetails]]
+    [/^#\/booking\/[0-9a-z]*\/?$/, /^#\/booking\//, TicketActions.showBookingDetails],
+    [/^#\/flight\/[0-9]*\/row\/[0-9]*\/seat\/[A-Za-z]\/?$/, /^#\/flight\//, parseSeatFromURL]]
 
 function getDataFromInitialURL(url) {
     for (const tuple of initialDataHandlers) {
@@ -130,11 +151,18 @@ export class App extends React.Component {
         const oldLocation = window.location.hash;
         const oldBookedTicket = this.state.bookedTicket;
         const newBookedTicket = TicketStore.getBookedTicket();
+        const oldSelectedSeat = this.state.selectedSeat;
+        const newSelectedSeat = TicketStore.getSelectedSeat();
         this.setState({
             globalError: TicketStore.getGlobalError(),
-            bookedTicket: newBookedTicket
+            bookedTicket: newBookedTicket,
+            selectedSeat: newSelectedSeat
         });
-        if ((newBookedTicket && oldLocation !== '#/booking/' + newBookedTicket.bookingId) ||
+        if ((newSelectedSeat &&
+                oldLocation !== `#/flight/${newSelectedSeat.flight.flight_number}/row/${newSelectedSeat.row}/seat/${newSelectedSeat.seat}`) ||
+                (oldSelectedSeat != newSelectedSeat && newSelectedSeat)) {
+            window.location.hash = `#/flight/${newSelectedSeat.flight.flight_number}/row/${newSelectedSeat.row}/seat/${newSelectedSeat.seat}`;
+        } else if ((newBookedTicket && oldLocation !== '#/booking/' + newBookedTicket.bookingId) ||
                 (oldBookedTicket !== newBookedTicket && newBookedTicket)) {
             window.location.hash = '#/booking/' + newBookedTicket.bookingId;
         }
