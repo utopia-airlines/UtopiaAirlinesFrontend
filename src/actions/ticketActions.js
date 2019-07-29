@@ -18,17 +18,23 @@ export const TICKET_ACTIONS = {
 
 export const TicketActions = {
     selectSeat: function(flight, row, seat) {
-        let local;
+        let flightNumber;
         if (typeof flight === 'number' || typeof flight === 'string') {
-            local = {
-                flight_number: flight
-            }
+            flightNumber = flight;
         } else {
-            local = flight;
+            flightNumber = flight.flight_number;
         }
-        Dispatcher.dispatch({
-            type: TICKET_ACTIONS.SELECT_SEAT,
-            value: {flight: local, row, seat}
+        TicketApi.getBookingDetailsBySeat(flightNumber, row, seat).then((val) => {
+            Dispatcher.dispatch({
+                type: TICKET_ACTIONS.SELECT_SEAT,
+                value: val.data
+            });
+        }, (err) => {
+            console.log(err);
+            Dispatcher.dispatch({
+                type: TICKET_ACTIONS.BOOKING_FAILURE,
+                value: false
+            })
         });
     },
 

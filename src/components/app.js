@@ -153,15 +153,23 @@ export class App extends React.Component {
         const newBookedTicket = TicketStore.getBookedTicket();
         const oldSelectedSeat = this.state.selectedSeat;
         const newSelectedSeat = TicketStore.getSelectedSeat();
+        let selectedSeatFlightNumber;
         this.setState({
             globalError: TicketStore.getGlobalError(),
             bookedTicket: newBookedTicket,
             selectedSeat: newSelectedSeat
         });
+        if (newSelectedSeat && newSelectedSeat.flight) {
+            if (newSelectedSeat.flight.flight_number) {
+                selectedSeatFlightNumber = newSelectedSeat.flight.flight_number;
+            } else if (newSelectedSeat.flight.flightNumber) {
+                selectedSeatFlightNumber = newSelectedSeat.flight.flightNumber;
+            }
+        }
         if ((newSelectedSeat &&
-                oldLocation !== `#/flight/${newSelectedSeat.flight.flight_number}/row/${newSelectedSeat.row}/seat/${newSelectedSeat.seat}`) ||
+                oldLocation !== `#/flight/${selectedSeatFlightNumber}/row/${newSelectedSeat.row}/seat/${newSelectedSeat.seat}`) ||
                 (oldSelectedSeat != newSelectedSeat && newSelectedSeat)) {
-            window.location.hash = `#/flight/${newSelectedSeat.flight.flight_number}/row/${newSelectedSeat.row}/seat/${newSelectedSeat.seat}`;
+            window.location.hash = `#/flight/${selectedSeatFlightNumber}/row/${newSelectedSeat.row}/seat/${newSelectedSeat.seat}`;
         } else if ((newBookedTicket && oldLocation !== '#/booking/' + newBookedTicket.bookingId) ||
                 (oldBookedTicket !== newBookedTicket && newBookedTicket)) {
             window.location.hash = '#/booking/' + newBookedTicket.bookingId;
