@@ -92,7 +92,7 @@ export class FlightDetails extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.seatList.map((seat) => createSeatRow(flight, seat))}
+                        {this.props.seatList.filter((seat) => !seat.reserved).map((seat) => createSeatRow(flight, seat))}
                     </tbody>
                 </Table>
             </div>);
