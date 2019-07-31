@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlightEndpointColumn } from './FlightEndpointColumn';
+import { FlightIcon } from './FlightIcon';
 
 // TODO: Reduce duplication between this and BookingDetails. We don't want to *export* (most of) the
 // helper functions, but this and BookingDetails need mostly the same functionality.
@@ -64,8 +65,7 @@ export function TicketDetails(props) {
                 <div className="row">
                     {endpointColumn(flight.departureAirport, flight.departureDate)}
                     <div className="col-sm">
-                        {/* TODO: Extract a component for this icon, since it also appears in FlightDetails */}
-                        <img src="./images/plane_icon.png" width={72} />
+                        <FlightIcon />
                     </div>
                     {endpointColumn(flight.destination, flight.arrivalDate)}
                 </div>
