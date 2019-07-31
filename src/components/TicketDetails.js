@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {datePart, timePart} from '../util/datetime';
-import {airportToString} from '../util/airportToString';
+import { FlightEndpointColumn } from './FlightEndpointColumn';
 
 // TODO: Reduce duplication between this and BookingDetails. We don't want to *export* (most of) the
 // helper functions, but this and BookingDetails need mostly the same functionality.
@@ -51,11 +50,7 @@ function endpointColumn(airport, date) {
     } else {
         local = { code: 'Unknown' };
     }
-    return <div className="col-sm" key={local.code}>
-        <div>{airportToString(local)}</div>
-        <div>{datePart(date)}</div>
-        <div>{timePart(date)}</div>
-    </div>;
+    return <FlightEndpointColumn airport={local} date={date} />;
 }
 
 export function TicketDetails(props) {

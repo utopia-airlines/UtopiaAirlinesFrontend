@@ -1,7 +1,6 @@
 import React from 'react';
-import { datePart, timePart } from '../util/datetime';
 import PropTypes from 'prop-types';
-import {airportToString} from '../util/airportToString';
+import { FlightEndpointColumn } from './FlightEndpointColumn';
 
 function getFlightFromBooking(booking) {
     if (!booking) {
@@ -61,14 +60,6 @@ function bookingStatusColumn(booking) {
     }
 }
 
-function endpointColumn(airport, date) {
-    return <div className="col-sm" key={airport.code}>
-        <div>{airportToString(airport)}</div>
-        <div>{datePart(date)}</div>
-        <div>{timePart(date)}</div>
-    </div>;
-}
-
 export function BookingDetails(props) {
     const flight = getFlightFromBooking(props.booking);
     const seat = getSeatFromBooking(props.booking);
@@ -76,12 +67,12 @@ export function BookingDetails(props) {
         <div className="ticket-container">
             <div className="flight_info container">
                 <div className="row">
-                    {endpointColumn(flight.departureAirport, flight.departureDate)}
+                    <FlightEndpointColumn airport={flight.departureAirport} date={flight.departureDate} />
                     <div className="col-sm">
                         {/* TODO: Extract a component for this icon, since it also appears in FlightDetails */}
                         <img src="./images/plane_icon.png" width={72} />
                     </div>
-                    {endpointColumn(flight.destination, flight.arrivalDate)}
+                    <FlightEndpointColumn airport={flight.destination} date={flight.arrivalDate} />
                 </div>
                 <div className="row">
                     <div className="col-sm" key={seat}>Seat: {seat}</div>
