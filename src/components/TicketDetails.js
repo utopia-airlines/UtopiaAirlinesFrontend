@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {datePart, timePart} from '../util/datetime';
+import {airportToString} from '../util/airportToString';
 
 // TODO: Reduce duplication between this and BookingDetails. We don't want to *export* (most of) the
 // helper functions, but this and BookingDetails need mostly the same functionality.
@@ -41,20 +42,6 @@ function getSeatFromTicket(ticket) {
         return getSeatFromTicket(ticket.id);
     }
     return `${row}${seat}`;
-}
-
-function airportToString(airport) {
-    if (typeof airport === 'string') {
-        return airport;
-    } else if (typeof airport === 'undefined') {
-        return 'Unknown';
-    } else if (airport.name && !airport.code) {
-        return airport.name;
-    } else if (airport.code && !airport.name) {
-        return airport.code;
-    } else {
-        return `${airport.name} (${airport.code})`;
-    }
 }
 
 function endpointColumn(airport, date) {

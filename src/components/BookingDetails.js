@@ -1,6 +1,7 @@
 import React from 'react';
 import { datePart, timePart } from '../util/datetime';
 import PropTypes from 'prop-types';
+import {airportToString} from '../util/airportToString';
 
 function getFlightFromBooking(booking) {
     if (!booking) {
@@ -40,20 +41,6 @@ function getSeatFromBooking(booking) {
         return getSeatFromBooking(booking.id);
     }
     return `${row}${seat}`;
-}
-
-function airportToString(airport) {
-    if (typeof airport === 'string') {
-        return airport;
-    } else if (typeof airport === 'undefined') {
-        return 'Unknown';
-    } else if (airport.name && !airport.code) {
-        return airport.name;
-    } else if (airport.code && !airport.name) {
-        return airport.code;
-    } else {
-        return `${airport.name} (${airport.code})`;
-    }
 }
 
 function priceColumn(booking) {
