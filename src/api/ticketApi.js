@@ -17,7 +17,6 @@ function getFlightNumber(ticket) {
 
 const TicketApi = {
     bookTicket: (ticket) => {
-        console.log(`About to post empty body to '${Config.api}/flight/${getFlightNumber(ticket)}/seat/${ticket.row}/${ticket.seat}/ticket'`);
         return axios.post(Config.api + '/flight/' + getFlightNumber(ticket) + '/seat/' +
             ticket.row + '/' + ticket.seat + '/ticket', {});
     },
