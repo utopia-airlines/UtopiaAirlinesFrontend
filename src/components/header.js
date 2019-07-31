@@ -8,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import {TicketActions} from '../actions/ticketActions';
 import Alert from 'react-bootstrap/Alert';
+import PropTypes from 'prop-types';
 
 function handleBookingCodeSubmission(event) {
     const textField = event.target[0];
@@ -23,13 +24,13 @@ function handleBookingCodeSubmission(event) {
 }
 
 function OptionalError(props) {
-    if (props.error) {
-        return <Alert variant='danger' dismissible onClose={() => TicketActions.clearError()}>
-            {props.error}
-        </Alert>;
-    } else {
-        return <Alert variant='danger' show={false} dismissible>No error currently</Alert>;
-    }
+    return <Alert variant='danger' show={!!props.error} dismissible onClose={() => TicketActions.clearError()}>
+        {props.error ? props.error : 'No error currently'}
+    </Alert>;
+}
+
+OptionalError.propTypes = {
+    error: PropTypes.any
 }
 
 function BookingCodeForm() {
