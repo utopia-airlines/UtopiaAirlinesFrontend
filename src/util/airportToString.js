@@ -1,3 +1,5 @@
+"use strict"
+
 export function airportToString(airport) {
     if (typeof airport === 'string') {
         return airport;

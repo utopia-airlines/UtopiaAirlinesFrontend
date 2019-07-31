@@ -1,3 +1,5 @@
+"use strict"
+
 // TODO: Customize the formatting based on the user's locale!
 
 function datePart(dateTimeString) {
