@@ -95,6 +95,7 @@ function singleError([num, error]) {
             {error}
         </Alert>;
     } else {
+        // TODO: Figure out a way to track down how this case happens
         return singleError([num, `${error}`]);
     }
 }

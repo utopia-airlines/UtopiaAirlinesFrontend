@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlightEndpointColumn } from './FlightEndpointColumn';
+import { ErrorActions } from '../actions/errorActions';
 
 function getFlightFromBooking(booking) {
     if (!booking) {
@@ -17,14 +18,14 @@ function getFlightFromBooking(booking) {
     } else if (booking.id) {
         return booking.id.flight;
     } else {
-        // console.log('Can\'t get flight from booking');
+        ErrorActions.showError('Failed to get flight from booking');
         return undefined;
     }
 }
 
 function getSeatFromBooking(booking) {
     if (!booking) {
-        // console.log('Can\'t get seat from booking');
+        ErrorActions.showError('Failed to get seat from booking');
         return undefined;
     }
     let row;

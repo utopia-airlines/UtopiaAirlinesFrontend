@@ -28,10 +28,10 @@ export const TicketActions = {
                 value: val.data
             });
         }, (err) => {
-            console.log(err);
             Dispatcher.dispatch({
                 type: ERROR_ACTIONS.SHOW_ERROR,
-                value: 'Getting booking details failed'
+                value: 'Getting booking details failed',
+                extra: err // Currently ignored by dispatcher, but possibly useful in debugging
             })
         });
     },
@@ -46,7 +46,7 @@ export const TicketActions = {
         }, (err) => {
             Dispatcher.dispatch({
                 type: ERROR_ACTIONS.SHOW_ERROR,
-                value: err
+                value: err // FIXME: This is supposed to be a string
             });
         });
     },
@@ -65,9 +65,8 @@ export const TicketActions = {
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val.data
             });
-        }, (err) => {
-            console.log(err);
-            this.invalidBookingId();
+        }, () => {
+            this.invalidBookingId(); // TODO: Dispatch a SHOW_ERROR event directly, passing it something based on the error
         });
     },
 
