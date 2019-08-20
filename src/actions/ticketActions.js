@@ -2,18 +2,16 @@
 
 import Dispatcher from '../dispatcher/appDispatcher';
 import TicketApi from '../api/ticketApi';
+import { ERROR_ACTIONS } from './errorActions';
 
 export const TICKET_ACTIONS = {
     SELECT_SEAT: 'ticketActions.SelectSeat',
     BOOK_TICKET: 'ticketActions.BookTicket',
     SHOW_BOOKING_DETAILS: 'ticketActions.ShowBookingDetails',
-    BOOKING_FAILURE: 'ticketActions.BookingFailure',
     PAY_FOR_TICKET: 'ticketActions.PayForTicket',
     EXTEND_TIMEOUT: 'ticketActions.ExtendTimeout',
     TIME_OUT: 'ticketActions.BookingTimedOut',
-    CANCEL: 'ticketActions.CancelTicket',
-    INVALID_BOOKING_ID: 'ticketActions.InvalidBookingId',
-    CLEAR_ERROR: 'ticketActions.clearError'
+    CANCEL: 'ticketActions.CancelTicket'
 }
 
 export const TicketActions = {
@@ -32,8 +30,8 @@ export const TicketActions = {
         }, (err) => {
             console.log(err);
             Dispatcher.dispatch({
-                type: TICKET_ACTIONS.BOOKING_FAILURE,
-                value: false
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Getting booking details failed'
             })
         });
     },
@@ -47,7 +45,7 @@ export const TicketActions = {
             });
         }, (err) => {
             Dispatcher.dispatch({
-                type: TICKET_ACTIONS.BOOKING_FAILURE,
+                type: ERROR_ACTIONS.SHOW_ERROR,
                 value: err
             });
         });
@@ -115,21 +113,14 @@ export const TicketActions = {
 
     invalidBookingId: function() {
         Dispatcher.dispatch({
-            type: TICKET_ACTIONS.INVALID_BOOKING_ID,
-            value: true
-        });
-    },
-
-    clearError: function() {
-        Dispatcher.dispatch({
-            type: TICKET_ACTIONS.CLEAR_ERROR,
-            value: true
+            type: ERROR_ACTIONS.SHOW_ERROR,
+            value: 'No such booking'
         });
     },
 
     bookingConflict: function() {
         Dispatcher.dispatch({
-            type: TICKET_ACTIONS.BOOKING_FAILURE,
+            type: ERROR_ACTIONS.SHOW_ERROR,
             value: 'Ticket has already been reserved'
         })
     }

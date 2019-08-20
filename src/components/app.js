@@ -13,6 +13,10 @@ import TicketStore from '../stores/ticketStore';
 import { BookingDetails } from './BookingDetails';
 import { TicketDetails} from './TicketDetails';
 import { TicketActions } from '../actions/ticketActions';
+import ErrorStore from '../stores/errorStore';
+import Alert from 'react-bootstrap/Alert';
+import PropTypes from 'prop-types';
+import { ErrorActions } from '../actions/errorActions';
 
 function currentFlightOrPlaceholder(flight) {
     if (typeof flight === 'string' || typeof flight === 'number') {
@@ -85,6 +89,28 @@ function getDataFromInitialURL(url) {
     }
 }
 
+function singleError([num, error]) {
+    if (typeof error === 'string') {
+        return <Alert variant='danger' show={true} dismissible onClose={() => ErrorActions.dismissError(num)} key={num}>
+            {error}
+        </Alert>;
+    } else {
+        return singleError([num, `${error}`]);
+    }
+}
+
+function OptionalError(props) {
+    return (
+        <>
+            {props.errorList.map(singleError)}
+        </>
+    );
+}
+
+OptionalError.propTypes = {
+    errorList: PropTypes.arrayOf(PropTypes.array)
+}
+
 export class App extends React.Component {
 
     constructor(props) {
@@ -95,9 +121,8 @@ export class App extends React.Component {
             seatList: [],
             selectedSeat: null,
             bookedTicket: null,
-            bookingFailureReason: null,
             paymentResult: null,
-            globalError: null
+            errorList: []
         };
     }
 
@@ -107,8 +132,9 @@ export class App extends React.Component {
         const currentTicket = currentTicketOrPlaceholder(this.state.selectedSeat);
         return (
             <div>
-                <Header error={this.state.globalError} />
+                <Header />
                 <div className="app-container">
+                    <OptionalError errorList={this.state.errorList} />
                     <Switch>
                         <Route exact path='/' render={(props) => (<FlightList {...props} flightList={this.state.flightList} />)}/>
                         <Route path='/flight/:flightNumber/row/:row/seat/:seat' render={(props) => <TicketDetails key={currentTicket} ticket={currentTicket} {...props} />} />
@@ -121,9 +147,16 @@ export class App extends React.Component {
         );
     }
 
+    _onErrorChange() {
+        this.setState({
+            errorList: ErrorStore.getAllErrors()
+        });
+    }
+
     componentDidMount() {
         FlightStore.addChangeListener(this._onFlightChange.bind(this));
         TicketStore.addChangeListener(this._onTicketChange.bind(this));
+        ErrorStore.addChangeListener(this._onErrorChange.bind(this));
         FlightActions.filterSearch((arg) => arg);
         getDataFromInitialURL(window.location.hash);
     }
@@ -131,6 +164,7 @@ export class App extends React.Component {
     componentWillUnmount() {
         FlightStore.removeChangeListener(this._onFlightChange.bind(this));
         TicketStore.removeChangeListener(this._onTicketChange.bind(this));
+        ErrorStore.removeChangeListener(this._onErrorChange.bind(this));
     }
 
     _onFlightChange() {
@@ -155,7 +189,6 @@ export class App extends React.Component {
         const newSelectedSeat = TicketStore.getSelectedSeat();
         let selectedSeatFlightNumber;
         this.setState({
-            globalError: TicketStore.getGlobalError(),
             bookedTicket: newBookedTicket,
             selectedSeat: newSelectedSeat
         });
