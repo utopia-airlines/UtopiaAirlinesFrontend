@@ -125,5 +125,12 @@ export const TicketActions = {
             type: TICKET_ACTIONS.CLEAR_ERROR,
             value: true
         });
+    },
+
+    bookingConflict: function() {
+        Dispatcher.dispatch({
+            type: TICKET_ACTIONS.BOOKING_FAILURE,
+            value: 'Ticket has already been reserved'
+        })
     }
 }

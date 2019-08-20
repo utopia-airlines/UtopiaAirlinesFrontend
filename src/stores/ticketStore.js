@@ -59,6 +59,7 @@ Dispatcher.register((action) => {
         case TICKET_ACTIONS.BOOK_TICKET:
         case TICKET_ACTIONS.SHOW_BOOKING_DETAILS:
             _ticketStore.bookedTicket = action.value;
+            _ticketStore.bookingFailureReason = null;
             _ticketStore.globalError = null;
             break;
         case TICKET_ACTIONS.BOOKING_FAILURE:
@@ -76,6 +77,7 @@ Dispatcher.register((action) => {
             break;
         case TICKET_ACTIONS.CLEAR_ERROR:
             _ticketStore.globalError = null;
+            _ticketStore.bookingFailureReason = null;
             break;
         default:
             return;

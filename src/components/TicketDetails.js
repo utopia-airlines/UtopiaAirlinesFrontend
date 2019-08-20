@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TicketActions } from '../actions/ticketActions';
 import { FlightEndpointColumn } from './FlightEndpointColumn';
 import { FlightIcon } from './FlightIcon';
 
@@ -56,6 +57,24 @@ function endpointColumn(airport, date) {
     return <FlightEndpointColumn airport={local} date={date} />;
 }
 
+function bookTicket(event, ticket) {
+    if (ticket.reserved) {
+        TicketActions.bookingConflict();
+    } else {
+        TicketActions.bookTicket(ticket);
+    }
+    event.preventDefault();
+}
+
+function bookOrCancelButton(ticket) {
+    if (!ticket || ticket.reserved) {
+        // FIXME: Allow (only) the ticket-holder to cancel from this screen
+        return <span>Ticket Reserved</span>;
+    } else {
+        return <button onClick={(event) => bookTicket(event, ticket)}>Book Ticket</button>
+    }
+}
+
 export function TicketDetails(props) {
     const flight = getFlightFromTicket(props.ticket);
     const seat = getSeatFromTicket(props.ticket);
@@ -72,7 +91,7 @@ export function TicketDetails(props) {
                 <div className="row">
                     <div className="col-sm" key={seat}>Seat: {seat}</div>
                     <div className="col-sm">$100</div>
-                    <div className="col-sm">{/* FIXME: Need a 'book ticket' button here! */}</div>
+                    <div className="col-sm">{bookOrCancelButton(props.ticket)}</div>
                 </div>
             </div>
         </div>
