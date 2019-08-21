@@ -59,7 +59,7 @@ function endpointColumn(airport, date) {
 
 function bookTicket(event, ticket) {
     if (ticket.reserved) {
-        TicketActions.bookingConflict(); // TODO: Make sure that shows 'Ticket already reserved' as an error
+        TicketActions.bookingConflict();
     } else {
         TicketActions.bookTicket(ticket);
     }
