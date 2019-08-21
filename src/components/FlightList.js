@@ -9,18 +9,28 @@ import {datePart, timePart} from '../util/datetime';
 function prettyPrintDate(dateString) {
     return `${timePart(dateString)} ${datePart(dateString)}`;
 }
-function createFlightRow(flight) {
+function FlightRow(props) {
     return (
-        <tr key={flight.flight_number} onClick={() => FlightActions.selectFlight(flight)}>
-            <td> {flight.flight_number} </td>
-            <td> {prettyPrintDate(flight.departure_date)} </td>
-            <td> {flight.departure} </td>
-            <td> {prettyPrintDate(flight.arrival_date)} </td>
-            <td> {flight.destination} </td>
-            <td> <button className="blue-btn btn button-sm" onClick={() => FlightActions.selectFlight(flight)}>
+        <tr key={props.flight.flight_number} onClick={() => FlightActions.selectFlight(props.flight)}>
+            <td> {props.flight.flight_number} </td>
+            <td> {prettyPrintDate(props.flight.departure_date)} </td>
+            <td> {props.flight.departure} </td>
+            <td> {prettyPrintDate(props.flight.arrival_date)} </td>
+            <td> {props.flight.destination} </td>
+            <td> <button className="blue-btn btn button-sm" onClick={() => FlightActions.selectFlight(props.flight)}>
                 Select</button></td>
         </tr>
     );
+}
+
+FlightRow.propTypes = {
+    flight: PropTypes.shape({
+        flight_number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        departure_date: PropTypes.string,
+        departure: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+        arrival_date: PropTypes.string,
+        destination: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+    })
 }
 
 function FlightListHeader() {
@@ -52,7 +62,7 @@ export function FlightList(props) {
             <Table responsive className="table flights-table">
                 <FlightListHeader />
                 <tbody>
-                    {props.flightList.map(createFlightRow)}
+                    {props.flightList.map((flight) => <FlightRow flight={flight} key={flight} />)}
                 </tbody>
             </Table>
         </div>
