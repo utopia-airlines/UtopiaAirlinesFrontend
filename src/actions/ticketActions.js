@@ -65,8 +65,12 @@ export const TicketActions = {
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val.data
             });
-        }, () => {
-            this.invalidBookingId(); // TODO: Dispatch a SHOW_ERROR event directly, passing it something based on the error
+        }, (err) => {
+            Dispatcher.dispatch({
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'No such booking', // TODO: Adjust based on the error
+                extra: err // This isn't actually used, but may be useful in debugging
+            });
         });
     },
 
