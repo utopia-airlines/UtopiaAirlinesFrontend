@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FlightEndpointColumn } from './FlightEndpointColumn';
 import { ErrorActions } from '../actions/errorActions';
+import { FlightIcon } from './FlightIcon';
 
 function getFlightFromBooking(booking) {
     if (!booking) {
@@ -72,8 +73,7 @@ export function BookingDetails(props) {
                 <div className="row">
                     <FlightEndpointColumn airport={flight.departureAirport} date={flight.departureDate} />
                     <div className="col-sm">
-                        {/* TODO: Extract a component for this icon, since it also appears in FlightDetails */}
-                        <img src="./images/plane_icon.png" width={72} />
+                        <FlightIcon />
                     </div>
                     <FlightEndpointColumn airport={flight.destination} date={flight.arrivalDate} />
                 </div>
