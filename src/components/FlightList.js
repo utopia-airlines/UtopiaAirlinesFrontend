@@ -17,8 +17,8 @@ function createFlightRow(flight) {
             <td> {flight.departure} </td>
             <td> {prettyPrintDate(flight.arrival_date)} </td>
             <td> {flight.destination} </td>
-            <td> <button className="blue-btn btn button-sm">
-                Select{/* FIXME: Add handler */}</button></td>
+            <td> <button className="blue-btn btn button-sm" onClick={() => FlightActions.selectFlight(flight)}>
+                Select</button></td>
         </tr>
     );
 }
