@@ -75,11 +75,17 @@ export const TicketActions = {
     },
 
     payForTicket: function(ticket, price) {
-        TicketApi.payForTicket(ticket, price).then((result) => { // TODO: error handling
+        TicketApi.payForTicket(ticket, price).then((result) => {
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.PAY_FOR_TICKET,
                 value: result
             });
+        }, (err) => {
+            Dispatcher.dispatch({
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Payment failed', // TODO: Adjust based on the error
+                extra: err // This isn't actually used, but may be useful in debugging
+            })
         });
     },
 
@@ -106,11 +112,17 @@ export const TicketActions = {
     },
 
     cancelTicket: function(ticket) {
-        TicketApi.cancelTicket(ticket).then(() => { // TODO: error handling
+        TicketApi.cancelTicket(ticket).then(() => {
             Dispatcher.dispatch({
                 type: TICKET_ACTIONS.CANCEL,
                 value: ticket
             });
+        }, (err) => {
+            Dispatcher.dispatch({
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Cancellation failed', // TODO: Adjust based on the error
+                extra: err // This isn't actually used, but may be useful in debugging
+            })
         });
     },
 
