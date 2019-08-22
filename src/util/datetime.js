@@ -1,13 +1,11 @@
 "use strict"
 
-// TODO: Customize the formatting based on the user's locale!
-
 function datePart(dateTimeString) {
     const date = new Date(dateTimeString);
     if (isNaN(date.getMonth())) {
         return 'Unknown';
     }
-    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+    return date.toLocaleDateString();
 }
 
 function timePart(dateTimeString) {
@@ -15,7 +13,12 @@ function timePart(dateTimeString) {
     if (isNaN(date.getHours())) {
         return 'Unknown';
     }
-    return `${date.getHours()}:${date.getMinutes()}`;
+    try {
+        return date.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'});
+    } catch (e) {
+        // If e.name === 'RangeError', browser most likely doesn't support options parameter
+        return `${date.getHours()}:${date.getMinutes()}`;
+    }
 }
 
 exports.datePart = datePart;
