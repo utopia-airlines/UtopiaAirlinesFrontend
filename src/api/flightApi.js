@@ -6,7 +6,7 @@ import Config from '../config';
 const FlightApi = {
     getFlights: function(filter, cb) {
         // TODO: If filtering is ever exposed in REST API, use that instead of doing the filtering ourselves
-        axios.get(Config.api + '/flights').then((response) => {
+        axios.get(Config.api + '/flights').then((response) => { // TODO: What if it fails, and/or returns a non-200-series response?
             cb(filter(response.data));
         });
     },
@@ -18,7 +18,7 @@ const FlightApi = {
         } else {
             flightNumber = flight;
         }
-        axios.get(Config.api + '/flight/' + flightNumber + '/seats').then((response) => {
+        axios.get(Config.api + '/flight/' + flightNumber + '/seats').then((response) => { // TODO: What if this fails, or returns a non-200-series response?
             cb(response.data);
         });
     }

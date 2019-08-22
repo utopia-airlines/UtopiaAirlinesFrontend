@@ -23,9 +23,13 @@ export const TicketActions = {
             flightNumber = flight.flight_number;
         }
         TicketApi.getBookingDetailsBySeat(flightNumber, row, seat).then((val) => {
-            Dispatcher.dispatch({
+            Dispatcher.dispatchOnResponse(val, {
                 type: TICKET_ACTIONS.SELECT_SEAT,
                 value: val.data
+            }, {
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Getting booking details failed unexpectedly',
+                extra: val
             });
         }, (err) => {
             Dispatcher.dispatch({
@@ -39,9 +43,13 @@ export const TicketActions = {
     bookTicket: function(ticket) {
         const promiseResult = TicketApi.bookTicket(ticket);
         promiseResult.then((val) => {
-            Dispatcher.dispatch({
+            Dispatcher.dispatchOnResponse(val, {
                 type: TICKET_ACTIONS.BOOK_TICKET,
                 value: val.data
+            }, {
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Booking ticket failed unexpectedly',
+                extra: val
             });
         }, (err) => {
             Dispatcher.dispatch({
@@ -60,10 +68,14 @@ export const TicketActions = {
         } else {
             booking = TicketApi.getBookingDetailsBySeat(ticket.flight, ticket.row, ticket.seat);
         }
-        booking.then((val) => { // TODO: what if booking invalid (error returned)?
-            Dispatcher.dispatch({
+        booking.then((val) => {
+            Dispatcher.dispatchOnResponse(val, {
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val.data
+            }, {
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Getting booking details failed',
+                extra: val
             });
         }, (err) => {
             Dispatcher.dispatch({
@@ -76,9 +88,13 @@ export const TicketActions = {
 
     payForTicket: function(ticket, price) {
         TicketApi.payForTicket(ticket, price).then((result) => {
-            Dispatcher.dispatch({
+            Dispatcher.dispatchOnResponse(result, {
                 type: TICKET_ACTIONS.PAY_FOR_TICKET,
                 value: result
+            }, {
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Accepting payment failed',
+                extra: result
             });
         }, (err) => {
             Dispatcher.dispatch({
@@ -92,9 +108,13 @@ export const TicketActions = {
     extendTimeout: function (ticket) {
         const promiseResult = TicketApi.extendTimeout(ticket);
         promiseResult.then((val) => {
-            Dispatcher.dispatch({
+            Dispatcher.dispatchOnResponse(val, {
                 type: TICKET_ACTIONS.SHOW_BOOKING_DETAILS,
                 value: val.data
+            }, {
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Extending timeout failed unexpectedly',
+                extra: val
             });
         }, () => {
             Dispatcher.dispatch({
@@ -112,10 +132,14 @@ export const TicketActions = {
     },
 
     cancelTicket: function(ticket) {
-        TicketApi.cancelTicket(ticket).then(() => {
-            Dispatcher.dispatch({
+        TicketApi.cancelTicket(ticket).then((resp) => {
+            Dispatcher.dispatchOnResponse(resp, {
                 type: TICKET_ACTIONS.CANCEL,
                 value: ticket
+            }, {
+                type: ERROR_ACTIONS.SHOW_ERROR,
+                value: 'Cancellation unexpectedly failed',
+                extra: resp
             });
         }, (err) => {
             Dispatcher.dispatch({
