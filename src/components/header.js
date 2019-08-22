@@ -41,7 +41,7 @@ export default function Header() {
         <Navbar className="navbar navbar-default sticky-top navbar-expand flex-column flex-md-row bd-navbar" bg="light">
             <div className="d-sm-none">
                 <button className="btn btn-outline-secondary" type="button">
-                    <i className="fa fa-list">{/*TODO: Does this need an extra inclusion?*/}</i>
+                    <i className="fa fa-list" />
                 </button>
             </div>
             <Navbar.Brand className="logo navbar-brand d-none d-sm-block">
