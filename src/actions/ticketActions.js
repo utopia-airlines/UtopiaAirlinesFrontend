@@ -54,7 +54,8 @@ export const TicketActions = {
         }, (err) => {
             Dispatcher.dispatch({
                 type: ERROR_ACTIONS.SHOW_ERROR,
-                value: err // FIXME: This is supposed to be a string
+                value: 'Booking ticket failed',
+                extra: err
             });
         });
     },
