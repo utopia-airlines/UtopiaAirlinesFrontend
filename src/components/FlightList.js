@@ -94,9 +94,6 @@ class FlightListHeader extends React.Component {
     }
 
     render() {
-        // FIXME: Allow submitting from any control. Obvious routes won't work: <form> can't be nested inside
-        // <tr>, <thead>, or <table>. If we define the form outside the table, that means this component is
-        // no longer self-contained.
         return (
             <thead id="flight-search-bar">
                 <tr>
@@ -106,12 +103,12 @@ class FlightListHeader extends React.Component {
                     <td></td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <th scope="col"><input type="date" id="departureDate" onChange={this.handleChange} />&nbsp;&nbsp;from&nbsp;&nbsp;</th>
-                    <th scope="col"><input maxLength={3} id="origin" width="5" onChange={this.handleChange} /></th>
-                    <th scope="col"><input type="date" id="arrivalDate" onChange={this.handleChange} />&nbsp;&nbsp;to&nbsp;&nbsp;</th>
-                    <th scope="col"><input maxLength={3} id="destination" width="5" onChange={this.handleChange} /></th>
-                    <th scope="col"><button className="orange-btn btn btn-sm" id="submitFilter" onClick={this.handleSubmit} >
+                    <td><form id="filterForm" onSubmit={this.handleSubmit} /></td>
+                    <th scope="col"><input type="date" id="departureDate" onChange={this.handleChange} form="filterForm" />&nbsp;&nbsp;from&nbsp;&nbsp;</th>
+                    <th scope="col"><input maxLength={3} id="origin" width="5" onChange={this.handleChange} form="filterForm" /></th>
+                    <th scope="col"><input type="date" id="arrivalDate" onChange={this.handleChange} form="filterForm" />&nbsp;&nbsp;to&nbsp;&nbsp;</th>
+                    <th scope="col"><input maxLength={3} id="destination" width="5" onChange={this.handleChange} form="filterForm" /></th>
+                    <th scope="col"><button className="orange-btn btn btn-sm" id="submitFilter" onClick={this.handleSubmit} form="filterForm" >
                         Search</button></th>
                 </tr>
             </thead>
