@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import {TicketActions} from '../actions/ticketActions';
-import Alert from 'react-bootstrap/Alert';
 
 function handleBookingCodeSubmission(event) {
     const textField = event.target[0];
@@ -22,20 +21,10 @@ function handleBookingCodeSubmission(event) {
     }
 }
 
-function OptionalError(props) {
-    if (props.error) {
-        return <Alert variant='danger' dismissible onClose={() => TicketActions.clearError()}>
-            {props.error}
-        </Alert>;
-    } else {
-        return <Alert variant='danger' show={false} dismissible>No error currently</Alert>;
-    }
-}
-
 function BookingCodeForm() {
     return (
         <Form inline className="float-right navbar-nav flex-row ml-md-auto d-none d-sm-flex"
-            onSubmit={handleBookingCodeSubmission}>{/* FIXME: This doesn't actually right-align!*/}
+            onSubmit={handleBookingCodeSubmission}>
             <InputGroup>
                 <InputGroup.Prepend id="booking-code-input-label">
                     <Navbar.Text>Enter booking code:&nbsp;&nbsp;</Navbar.Text>
@@ -47,12 +36,12 @@ function BookingCodeForm() {
         </Form>);
 }
 
-export default function Header(props) {
+export default function Header() {
     return (
         <Navbar className="navbar navbar-default sticky-top navbar-expand flex-column flex-md-row bd-navbar" bg="light">
             <div className="d-sm-none">
                 <button className="btn btn-outline-secondary" type="button">
-                    <i className="fa fa-list">{/*TODO: Does this need an extra inclusion?*/}</i>
+                    <i className="fa fa-list" />
                 </button>
             </div>
             <Navbar.Brand className="logo navbar-brand d-none d-sm-block">
@@ -64,7 +53,6 @@ export default function Header(props) {
             </Navbar.Brand>
             <BookingCodeForm />
             {/*TODO: Add log-in/sign-up links?*/}
-            <OptionalError {...props} />
         </Navbar>
     );
 }

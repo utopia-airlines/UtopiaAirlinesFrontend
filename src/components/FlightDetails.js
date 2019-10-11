@@ -1,8 +1,11 @@
+"use strict"
+
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import PropTypes from 'prop-types';
 import {datePart, timePart} from '../util/datetime';
 import { TicketActions } from '../actions/ticketActions';
+import { FlightIcon } from './FlightIcon';
 
 function getSeatClass(cls) {
     switch (cls) {
@@ -60,7 +63,7 @@ function FlightDetailsHeader(props) {
                 <div> {timePart(props.flight.departure_date)} </div>
             </div>
             <div className="col-4">
-                <img src="./images/plane_icon.png" width={72} />
+                <FlightIcon />
             </div>
             <div className="col-4" key={props.flight.destination}>
                 <div> {props.flight.destination} </div>
@@ -92,7 +95,7 @@ export class FlightDetails extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.seatList.map((seat) => createSeatRow(flight, seat))}
+                        {this.props.seatList.filter((seat) => !seat.reserved).map((seat) => createSeatRow(flight, seat))}
                     </tbody>
                 </Table>
             </div>);
